@@ -24,20 +24,22 @@ class AppWelcome extends HTMLElement {
         </section>
         <section class="sect2 absolute inset-0 w-full h-full bg-black bg-opacity-80 flex flex-col items-center justify-center gap-5 text-center shadow-[0_0_30px_rgba(0,0,0,0.7)] z-[5] transition-opacity ease-in duration-500">
           <div class="videoclip w-1/2 h-[60%] flex items-center justify-center p-4 mx-auto">
-            <iframe 
-              class="w-[80%] h-full border-2 border-red-600 rounded-lg"
-              src="https://www.youtube.com/embed/ds5tCfZAJuM" 
-              title="YouTube video player" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              allowfullscreen>
-            </iframe>
+            <video 
+              class="w-full h-full object-cover rounded-lg border-2 border-red-600"
+              autoplay 
+              muted 
+              loop
+              playsinline
+            >
+              <source src="" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
           </div>
           <div class="contenido2">
             <p class="text-2xl font-bold text-red-600">MORTAL KOMBAT</p>
           </div>
           <div class="btninit">
-            <button id="btnPlay" class="inline-block bg-red-600 text-white no-underline px-6 py-3 text-lg rounded-md transition-colors duration-300 hover:bg-red-800">
+            <button id="btnPlay" class="inline-block bg-red-600 text-white no-underline px-8 py-4 text-xl rounded-md transition-all duration-300 hover:bg-red-800 hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transform hover:-translate-y-1">
               JUGAR AHORA
             </button>
           </div>

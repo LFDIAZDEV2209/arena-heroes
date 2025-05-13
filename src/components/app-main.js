@@ -20,9 +20,11 @@ export class AppMain extends HTMLElement {
                             <div class="logo1 transform hover:scale-105 transition-transform duration-300">
                                 <img src="${logo}" alt="logo mortal kombat" class="max-w-[300px] md:max-w-[400px] lg:max-w-[600px] h-auto drop-shadow-2xl">
                             </div>
-                            <div class="contenido clip-path-custom overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300">
-                                <h3 class="text-xl md:text-2xl lg:text-3xl text-red-600 mt-2 font-bold">Empieza el reinado del caos</h3>
-                                <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2">Sangre, Honor y Batalla sin Fin</p>
+                            <div class="contenido clip-path-custom overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                                <div class="relative">
+                                    <h3 class="text-xl md:text-2xl lg:text-3xl text-red-600 mt-2 font-bold drop-shadow-lg">Empieza el reinado del caos</h3>
+                                    <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -54,9 +56,11 @@ export class AppMain extends HTMLElement {
                         <div class="logo1 transform hover:scale-105 transition-transform duration-300">
                             <img src="${logo}" alt="logo mortal kombat" class="max-w-[300px] md:max-w-[400px] lg:max-w-[600px] h-auto drop-shadow-2xl">
                         </div>
-                        <div class="contenido clip-path-custom overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300">
-                            <h3 class="text-xl md:text-2xl lg:text-3xl text-red-600 mt-2 font-bold">Empieza el reinado del caos</h3>
-                            <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2">Sangre, Honor y Batalla sin Fin</p>
+                        <div class="contenido clip-path-custom overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                            <div class="relative">
+                                <h3 class="text-xl md:text-2xl lg:text-3xl text-red-600 mt-2 font-bold drop-shadow-lg">Empieza el reinado del caos</h3>
+                                <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
+                            </div>
                         </div>
                     </section>
                 `;
