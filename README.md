@@ -29,7 +29,7 @@ Arena Heroes es una aplicación web moderna construida con Vite, JavaScript y Ta
 
 1. Clona el repositorio:
 ```bash
-git clone [URL_DEL_REPOSITORIO]
+git clone https://github.com/LFDIAZDEV2209/arena-heroes
 cd arena-heroes
 ```
 
@@ -129,6 +129,7 @@ El proyecto utiliza variables de entorno para la configuración. Crea un archivo
 ```env
 VITE_HOST=localhost
 VITE_PORT=3000
+VITE_API_URL=http://localhost:3000
 ```
 
 ## 📄 Licencia
@@ -137,9 +138,11 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.m
 
 ## 👥 Equipo
 
-- [Tu Nombre] - Desarrollador Principal
-- [Otros Miembros del Equipo]
+- Luis Felipe Diaz - Desarrollador Principal
+- Sheyla Esther Samur - Desarrolladora Frontend
+- Jorge Cristancho Olarte - Desarrollador Backend
+- Leidy Johanna Villegas - Desarrolladora FullStack
 
 ---
 
-⭐️ From [Tu Organización]
+⭐️ From Los Pinguinos de Madagascar
