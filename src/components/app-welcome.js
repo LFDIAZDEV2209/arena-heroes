@@ -46,12 +46,14 @@ class AppWelcome extends HTMLElement {
     `;
 
     const btnPlay = this.querySelector("#btnPlay");
+    const video = this.querySelector("video");
     const sect1 = this.querySelector(".sect1");
     const sect2 = this.querySelector(".sect2");
 
     btnPlay.addEventListener("click", () => {
       sect2.classList.add("hidden");
       sect1.classList.remove("hidden");
+      video.pause();
       
       const event = new CustomEvent('welcomeComplete', {
         bubbles: true,

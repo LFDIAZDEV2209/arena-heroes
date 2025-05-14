@@ -9,7 +9,7 @@ class AppDlc extends HTMLElement {
     async render(){
         const charactersDlc = await getCharactersByType("dlc")
         this.innerHTML = `
-            <div class="container mx-auto px-16 py-20">
+            <div class="container mx-auto px-14 p-5">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                     ${charactersDlc.map((character, idx) => {
                         return `
@@ -33,11 +33,7 @@ class AppDlc extends HTMLElement {
                                             ${character.description}
                                         </p>
                                         <p class="text-sm">
-                                            ${character.suits.map(suit => `
-                                                <span class="text-sm">
-                                                    ${suit}
-                                                </span>
-                                            `).join('')}
+                                            Trajes: ${character.suits.join(', ')}
                                         </p>
                                         <button class="bg-red-300 text-black font-semibold rounded px-8 py-1 mt-4 mx-auto block btn-close" data-idx="${idx}">Close</button>
                                     </div>
