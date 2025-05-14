@@ -13,7 +13,7 @@ class AppDlc extends HTMLElement {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                     ${charactersDlc.map((character, idx) => {
                         return `
-                        <div class="w-70 max-w-sm border-2 border-gray-300 shadow-xl -skew-y-3 [perspective:1000px]">
+                        <div class="w-70 max-w-sm shadow-xl -skew-y-3 [perspective:1000px]">
                             <div class="relative w-full h-[400px] bg-gray-300 transition-transform duration-500 card-inner-${idx}" style="transform-style: preserve-3d;">
                                 <!-- Cara frontal -->
                                 <div class="absolute inset-0 backface-hidden flex flex-col items-center py-10 z-10">

@@ -20,9 +20,9 @@ export class AppMain extends HTMLElement {
                             <div class="logo1 transform hover:scale-105 transition-transform duration-300">
                                 <img src="${logo}" alt="logo mortal kombat" class="max-w-[300px] md:max-w-[400px] lg:max-w-[600px] h-auto drop-shadow-2xl">
                             </div>
-                            <div class="contenido clip-path-custom overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
                                 <div class="relative">
-                                    <h3 class="text-xl md:text-2xl lg:text-3xl text-red-600 mt-2 font-bold drop-shadow-lg">Empieza el reinado del caos</h3>
+                                    <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
                                     <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
                                 </div>
                             </div>
@@ -31,6 +31,7 @@ export class AppMain extends HTMLElement {
                 </div>
             </div>
         `;
+        this.typewriterEffect('Empieza el reinado del caos');
     }
 
     setupEventListeners() {
@@ -50,22 +51,37 @@ export class AppMain extends HTMLElement {
             
             if (section === 'dlc') {
                 contentView.innerHTML = '<app-dlc></app-dlc>';
+            } else if (section === 'arena') {
+                contentView.innerHTML = '<app-arenas></app-arenas>';
             } else if (section === 'home') {
                 contentView.innerHTML = `
                     <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-30 gap-3 text-center">
                         <div class="logo1 transform hover:scale-105 transition-transform duration-300">
                             <img src="${logo}" alt="logo mortal kombat" class="max-w-[300px] md:max-w-[400px] lg:max-w-[600px] h-auto drop-shadow-2xl">
                         </div>
-                        <div class="contenido clip-path-custom overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                        <div class="contenido clip-path-custom skew-x-[-12deg] overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
                             <div class="relative">
-                                <h3 class="text-xl md:text-2xl lg:text-3xl text-red-600 mt-2 font-bold drop-shadow-lg">Empieza el reinado del caos</h3>
+                                <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
                                 <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
                             </div>
                         </div>
                     </section>
                 `;
+                this.typewriterEffect('Empieza el reinado del caos');
             }
         });
+    }
+
+    typewriterEffect(text) {
+        const el = this.querySelector('#typewriter');
+        if (!el) return;
+        el.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+            el.textContent += text.charAt(i);
+            i++;
+            if (i >= text.length) clearInterval(interval);
+        }, 200);
     }
 }
 
