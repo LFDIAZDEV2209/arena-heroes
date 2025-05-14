@@ -124,11 +124,11 @@ customElements.define("app-main", AppMain);
 const style = document.createElement('style');
 style.textContent = `
 .spin-coin {
-    animation: spinY 1s cubic-bezier(0.4, 0.2, 0.2, 1);
+    animation: spinY 2s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 @keyframes spinY {
     0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
+    100% { transform: rotateY(720deg); }
 }`;
 document.head.appendChild(style);
 
