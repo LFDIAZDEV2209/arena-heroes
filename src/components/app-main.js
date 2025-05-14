@@ -15,12 +15,12 @@ export class AppMain extends HTMLElement {
                 </div>
                 <div id="main-view" class="hidden transition-opacity duration-500 opacity-0">
                     <app-nav class="fixed top-0 left-0 w-full z-50 pr-20"></app-nav>
-                    <div id="content-view" class="mx-auto px-14 p-5 pt-25 transition-opacity duration-500 opacity-100">
-                        <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-30 gap-3 text-center">
-                            <div class="logo1 transform hover:scale-105 transition-transform duration-300">
-                                <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="max-w-[300px] md:max-w-[400px] lg:max-w-[600px] h-auto drop-shadow-2xl transition-transform duration-700">
+                    <div id="content-view" class="mx-auto px-4 sm:px-8 md:px-14 lg:px-20 p-3 sm:p-5 pt-20 sm:pt-25 transition-opacity duration-500 opacity-100 w-full max-w-7xl">
+                        <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
+                            <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
+                                <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-48 sm:w-64 md:w-80 lg:w-[600px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
                             </div>
-                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-8 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
                                 <div class="relative">
                                     <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
                                     <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
@@ -58,11 +58,11 @@ export class AppMain extends HTMLElement {
                     contentView.innerHTML = '<app-cameos></app-cameos>';
                 } else if (section === 'home') {
                     contentView.innerHTML = `
-                        <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-30 gap-3 text-center">
-                            <div class="logo1 transform hover:scale-105 transition-transform duration-300">
-                                <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="max-w-[300px] md:max-w-[400px] lg:max-w-[600px] h-auto drop-shadow-2xl transition-transform duration-700">
+                        <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
+                            <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
+                                <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-48 sm:w-64 md:w-80 lg:w-[600px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
                             </div>
-                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-6 md:p-8 w-full md:w-[45%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-8 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
                                 <div class="relative">
                                     <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
                                     <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
@@ -129,7 +129,8 @@ style.textContent = `
 @keyframes spinY {
     0% { transform: rotateY(0deg); }
     100% { transform: rotateY(720deg); }
-}`;
+}
+`;
 document.head.appendChild(style);
 
 // Agrega las fuentes Bebas Neue y Montserrat al head si no están ya

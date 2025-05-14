@@ -10,15 +10,23 @@ class AppNav extends HTMLElement {
 
   render() {
     this.innerHTML = `
-    <div class="flex justify-between">
-      <img src="${logo}" alt="logo mortal kombat" class="h-20 w-auto pl-10 pt-6">
-      <nav class="nav flex items-center">
+    <button id="sidebarToggle" class="sm:hidden fixed top-3 left-3 z-[100] p-2 rounded bg-black/80 text-white focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-7 h-7">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <div id="sidebar" class="hidden sm:flex flex-row sm:flex-col fixed sm:fixed left-0 top-0 w-64 sm:w-48 h-full sm:h-screen bg-black/80 z-50 shadow-lg transition-transform duration-300 -translate-x-full sm:translate-x-0">
+      <div class="flex items-center justify-center sm:justify-start w-full h-16 sm:h-32 p-2 sm:pt-8">
+        <img src="${logo}" alt="logo mortal kombat" class="h-10 sm:h-20 w-auto mx-auto">
+      </div>
+      <nav class="nav flex flex-1 flex-col items-center justify-center sm:justify-start w-full sm:w-auto gap-2 sm:gap-4 px-2 sm:px-4 py-2 sm:py-4">
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'home' ? 'active' : ''}" data-section="home">HOME</button>
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'cameos' ? 'active' : ''}" data-section="cameos">CAMEOS</button>
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#813E17] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'dlc' ? 'active' : ''}" data-section="dlc">DLC</button>
         <button class="btn-nav bg-gradient-to-r from-[#F7D5AF] to-[#813E17] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'arena' ? 'active' : ''}" data-section="arena">ARENA</button>
       </nav>
-    <div>
+    </div>
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden sm:hidden"></div>
     `;
 
     // Add styles for active state
@@ -52,6 +60,32 @@ class AppNav extends HTMLElement {
       }
     `;
     this.appendChild(style);
+
+    // Sidebar toggle logic
+    setTimeout(() => {
+      const sidebar = this.querySelector('#sidebar');
+      const overlay = this.querySelector('#sidebarOverlay');
+      const toggle = this.querySelector('#sidebarToggle');
+      if (toggle && sidebar && overlay) {
+        toggle.addEventListener('click', () => {
+          sidebar.classList.remove('hidden');
+          sidebar.classList.remove('-translate-x-full');
+          overlay.classList.remove('hidden');
+        });
+        overlay.addEventListener('click', () => {
+          sidebar.classList.add('-translate-x-full');
+          overlay.classList.add('hidden');
+          setTimeout(() => sidebar.classList.add('hidden'), 300);
+        });
+        sidebar.querySelectorAll('button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            setTimeout(() => sidebar.classList.add('hidden'), 300);
+          });
+        });
+      }
+    }, 0);
   }
 
   setupEventListeners() {
