@@ -36,6 +36,11 @@ export class AppSelector extends HTMLElement {
             };
             this.currentSelectingPlayer = 1;
             this.render();
+            
+            // Si es modo CPU vs CPU, seleccionar personajes automáticamente
+            if (this.gameMode === 'cvc') {
+                this.handleCPUvsCPU();
+            }
         }
     }
 
@@ -45,7 +50,10 @@ export class AppSelector extends HTMLElement {
     }
 
     setupEventListeners() {
-        this.addEventListener('click', (e) => {
+        // Delegación global para asegurar que los botones funcionen en cualquier estructura
+        document.addEventListener('click', (e) => {
+            // Solo manejar eventos si el selector está visible
+            if (!this.isConnected) return;
             const character = e.target.closest('.character-selected');
             const confirmButton = e.target.closest('.confirm-selection');
             const randomButton = e.target.closest('.random-selection');
@@ -90,27 +98,32 @@ export class AppSelector extends HTMLElement {
     }
 
     async selectCPUCharacter() {
-        const characterSelector = await getCharacters();
-        // Selecciona un personaje aleatorio que no sea el mismo que el jugador
-        const availableCharacters = characterSelector.filter(char => 
-            char.id !== this.selectedCharacters.player1.id
-        );
-        const randomIndex = Math.floor(Math.random() * availableCharacters.length);
-        const cpuCharacter = availableCharacters[randomIndex];
+        try {
+            const characterSelector = await getCharacters();
+            // Selecciona un personaje aleatorio que no sea el mismo que el jugador
+            const availableCharacters = characterSelector.filter(char => 
+                char.id !== this.selectedCharacters.player1.id
+            );
+            const randomIndex = Math.floor(Math.random() * availableCharacters.length);
+            const cpuCharacter = availableCharacters[randomIndex];
 
-        this.selectedCharacters.player2 = {
-            id: cpuCharacter.id,
-            name: cpuCharacter.name,
-            image: cpuCharacter.image,
-            abilities: {
-                strength: cpuCharacter.abilities.strength,
-                attack: cpuCharacter.abilities.attack,
-                damage: cpuCharacter.abilities.damage,
-                weakness: cpuCharacter.abilities.weakness
-            }
-        };
-        this.confirmedSelections.player2 = true;
-        this.updatePlayerCard(2);
+            this.selectedCharacters.player2 = {
+                id: cpuCharacter.id,
+                name: cpuCharacter.name,
+                image: cpuCharacter.image,
+                abilities: {
+                    strength: cpuCharacter.abilities.strength,
+                    attack: cpuCharacter.abilities.attack,
+                    damage: cpuCharacter.abilities.damage,
+                    weakness: cpuCharacter.abilities.weakness
+                }
+            };
+            this.confirmedSelections.player2 = true;
+            this.updatePlayerCard(2);
+            console.log('CPU character selected:', this.selectedCharacters.player2);
+        } catch (error) {
+            console.error('Error selecting CPU character:', error);
+        }
     }
 
     async confirmSelection(playerNumber) {
@@ -121,7 +134,7 @@ export class AppSelector extends HTMLElement {
             } else if (this.gameMode === 'pvc') {
                 // La CPU selecciona su personaje automáticamente
                 await this.selectCPUCharacter();
-                console.log('CPU ha seleccionado su personaje');
+                console.log('CPU ha seleccionado su personaje:', this.selectedCharacters.player2);
                 // Redirigir a la vista de lucha después de que la CPU seleccione
                 this.redirectToFight();
             }
@@ -184,6 +197,19 @@ export class AppSelector extends HTMLElement {
         this.updatePlayerCard(playerNumber);
     }
 
+    async handleCPUvsCPU() {
+        // Seleccionar personaje para CPU 1
+        await this.selectRandomCharacter(1);
+        this.confirmedSelections.player1 = true;
+        
+        // Seleccionar personaje para CPU 2
+        await this.selectRandomCharacter(2);
+        this.confirmedSelections.player2 = true;
+        
+        // Redirigir a la vista de lucha
+        this.redirectToFight();
+    }
+
     updatePlayerCard(playerNumber) {
         const card = this.querySelector(`#userCard${playerNumber}`);
         if (card && this.selectedCharacters[`player${playerNumber}`]) {
@@ -227,11 +253,11 @@ export class AppSelector extends HTMLElement {
         const showRandomButton = this.gameMode === 'cvc' || (this.gameMode === 'pvc' && playerNumber === 1) || (this.gameMode === 'pvp' && !this.confirmedSelections[`player${playerNumber}`]);
         
         return `
-            <div id="userCard${playerNumber}" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+            <div id="userCard${playerNumber}" class="group relative w-[200px] h-[260px] sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex flex-col justify-between">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${selectedCharacter ? selectedCharacter.image : (isCPU ? user2 : user1)}');"></div>
-                <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
-                    <h3 class="w-full text-2xl text-yellow-500 mt-0">${selectedCharacter ? selectedCharacter.name : playerType}</h3>
-                    <div class="flex flex-col gap-1 text-sm text-white mt-2">
+                <div class="relative z-10 p-2 sm:p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
+                    <h3 class="w-full text-base sm:text-2xl text-yellow-500 mt-0">${selectedCharacter ? selectedCharacter.name : playerType}</h3>
+                    <div class="flex flex-col gap-1 text-xs sm:text-sm text-white mt-2">
                         ${selectedCharacter ? `
                             <p class="flex items-center gap-2">
                                 <span class="text-amber-400">⚔ Ataque:</span> 
@@ -256,11 +282,11 @@ export class AppSelector extends HTMLElement {
                             <p>🎯 </p>
                         `}
                         ${showRandomButton ? 
-                            `<button class="random-selection bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-300" data-player="${playerNumber}">
+                            `<button class="random-selection bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded mt-2 sm:mt-4 transition-colors duration-300 text-xs sm:text-base" data-player="${playerNumber}">
                                 Selección Aleatoria
                             </button>` : ''}
                         ${(this.gameMode === 'pvp' || this.gameMode === 'pvc') && isSelecting ? 
-                            `<button class="confirm-selection bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-300" data-player="${playerNumber}">
+                            `<button class="confirm-selection bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded mt-2 sm:mt-4 transition-colors duration-300 text-xs sm:text-base" data-player="${playerNumber}">
                                 Confirmar Selección
                             </button>` : ''}
                     </div>
@@ -270,16 +296,16 @@ export class AppSelector extends HTMLElement {
     }
 
     async render() {
+        // Asegúrate de tener <meta name="viewport" content="width=device-width, initial-scale=1"> en tu index.html
         const characterSelector = await getCharacters(); 
         this.innerHTML = `
-            <div class="w-screen h-screen flex flex-col items-center justify-center">
-                <div class="flex justify-center items-center flex-row w-4/5 mx-auto m-8 gap-5">
+            <div class="w-[90vw] h-screen flex flex-col items-center justify-center">
+                <div class="flex flex-col sm:flex-row items-center justify-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-5 pr-3">
                     ${this.getPlayerCard(1, this.gameMode === 'cvc')}
-                    
                     <!-- VS -->
-                    <div class="flex items-center justify-center gap-5">
+                    <div class="flex items-center justify-center">
                         <div id="selector">
-                            <div class="grid grid-cols-3 mt-10 gap-1 justify-items-center">
+                            <div class="grid grid-cols-4 sm:grid-cols-6 gap-1 sm:gap-2 justify-items-center mt-4 sm:mt-10">
                                 ${characterSelector.map(character => {
                                     return `        
                                         <div class="character-selected bg-gray-700 opacity-85 border-1 border-amber-400 border-solid shadow-md rounded-lg hover:scale-110 transition-transform duration-300 cursor-pointer" 
@@ -290,18 +316,18 @@ export class AppSelector extends HTMLElement {
                                              data-attack="${character.abilities.attack}"
                                              data-damage="${character.abilities.damage}"
                                              data-weakness="${character.abilities.weakness}">
-                                            <img src="${character.imageSMALL}" alt="${character.name}" class="w-20 h-20" />
+                                            <img src="${character.imageSMALL}" alt="${character.name}" class="w-10 h-10 sm:w-20 sm:h-20" />
                                         </div>
                                     `;
                                 }).join('')}
                             </div>   
                         </div>
                     </div>    
-                    
-                    ${this.getPlayerCard(2, this.gameMode === 'pvc' || this.gameMode === 'cvc')}
+                    ${this.getPlayerCard(2, this.gameMode === 'cvc' || this.gameMode === 'pvc')}
                 </div>
             </div>
         `;
+        this.setupEventListeners();
     }
 }
 customElements.define('app-selector', AppSelector)
