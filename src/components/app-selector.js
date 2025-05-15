@@ -36,6 +36,11 @@ export class AppSelector extends HTMLElement {
             };
             this.currentSelectingPlayer = 1;
             this.render();
+            
+            // Si es modo CPU vs CPU, seleccionar personajes automáticamente
+            if (this.gameMode === 'cvc') {
+                this.handleCPUvsCPU();
+            }
         }
     }
 
@@ -90,27 +95,32 @@ export class AppSelector extends HTMLElement {
     }
 
     async selectCPUCharacter() {
-        const characterSelector = await getCharacters();
-        // Selecciona un personaje aleatorio que no sea el mismo que el jugador
-        const availableCharacters = characterSelector.filter(char => 
-            char.id !== this.selectedCharacters.player1.id
-        );
-        const randomIndex = Math.floor(Math.random() * availableCharacters.length);
-        const cpuCharacter = availableCharacters[randomIndex];
+        try {
+            const characterSelector = await getCharacters();
+            // Selecciona un personaje aleatorio que no sea el mismo que el jugador
+            const availableCharacters = characterSelector.filter(char => 
+                char.id !== this.selectedCharacters.player1.id
+            );
+            const randomIndex = Math.floor(Math.random() * availableCharacters.length);
+            const cpuCharacter = availableCharacters[randomIndex];
 
-        this.selectedCharacters.player2 = {
-            id: cpuCharacter.id,
-            name: cpuCharacter.name,
-            image: cpuCharacter.image,
-            abilities: {
-                strength: cpuCharacter.abilities.strength,
-                attack: cpuCharacter.abilities.attack,
-                damage: cpuCharacter.abilities.damage,
-                weakness: cpuCharacter.abilities.weakness
-            }
-        };
-        this.confirmedSelections.player2 = true;
-        this.updatePlayerCard(2);
+            this.selectedCharacters.player2 = {
+                id: cpuCharacter.id,
+                name: cpuCharacter.name,
+                image: cpuCharacter.image,
+                abilities: {
+                    strength: cpuCharacter.abilities.strength,
+                    attack: cpuCharacter.abilities.attack,
+                    damage: cpuCharacter.abilities.damage,
+                    weakness: cpuCharacter.abilities.weakness
+                }
+            };
+            this.confirmedSelections.player2 = true;
+            this.updatePlayerCard(2);
+            console.log('CPU character selected:', this.selectedCharacters.player2);
+        } catch (error) {
+            console.error('Error selecting CPU character:', error);
+        }
     }
 
     async confirmSelection(playerNumber) {
@@ -121,7 +131,7 @@ export class AppSelector extends HTMLElement {
             } else if (this.gameMode === 'pvc') {
                 // La CPU selecciona su personaje automáticamente
                 await this.selectCPUCharacter();
-                console.log('CPU ha seleccionado su personaje');
+                console.log('CPU ha seleccionado su personaje:', this.selectedCharacters.player2);
                 // Redirigir a la vista de lucha después de que la CPU seleccione
                 this.redirectToFight();
             }
@@ -182,6 +192,19 @@ export class AppSelector extends HTMLElement {
             }
         };
         this.updatePlayerCard(playerNumber);
+    }
+
+    async handleCPUvsCPU() {
+        // Seleccionar personaje para CPU 1
+        await this.selectRandomCharacter(1);
+        this.confirmedSelections.player1 = true;
+        
+        // Seleccionar personaje para CPU 2
+        await this.selectRandomCharacter(2);
+        this.confirmedSelections.player2 = true;
+        
+        // Redirigir a la vista de lucha
+        this.redirectToFight();
     }
 
     updatePlayerCard(playerNumber) {

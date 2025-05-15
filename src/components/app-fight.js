@@ -9,18 +9,25 @@ export class AppFight extends HTMLElement {
     this.player1Data = null;
     this.player2Data = null;
     this.gameMode = null;
+    this.currentTurn = 1;
+    this.isFighting = false;
+    this.health1 = 100;
+    this.health2 = 100;
+    this.handleFightEvent = this.handleFightEvent.bind(this);
+  }
+
+  handleFightEvent(event) {
+    this.player1Data = event.detail.player1;
+    this.player2Data = event.detail.player2;
+    this.gameMode = event.detail.gameMode;
+    this.health1 = 100;
+    this.health2 = 100;
+    this.render();
   }
 
   connectedCallback() {
-    // Escuchar el evento startFight
-    document.addEventListener('startFight', (event) => {
-      this.player1Data = event.detail.player1;
-      this.player2Data = event.detail.player2;
-      this.gameMode = event.detail.gameMode;
-      this.render();
-    });
+    document.addEventListener('startFight', this.handleFightEvent);
 
-    // Si ya tenemos los datos (por ejemplo, si la página se recargó), intentar recuperarlos
     if (!this.player1Data || !this.player2Data) {
       const storedData = sessionStorage.getItem('fightData');
       if (storedData) {
@@ -28,6 +35,8 @@ export class AppFight extends HTMLElement {
         this.player1Data = data.player1;
         this.player2Data = data.player2;
         this.gameMode = data.gameMode;
+        this.health1 = 100;
+        this.health2 = 100;
       }
     }
 
@@ -35,21 +44,135 @@ export class AppFight extends HTMLElement {
   }
 
   disconnectedCallback() {
-    // Limpiar el listener cuando el componente se desconecta
     document.removeEventListener('startFight', this.handleFightEvent);
   }
 
-  async render() {
-    // Guardar los datos en sessionStorage para persistencia
-    if (this.player1Data && this.player2Data) {
-      sessionStorage.setItem('fightData', JSON.stringify({
-        player1: this.player1Data,
-        player2: this.player2Data,
-        gameMode: this.gameMode
-      }));
+  startFight() {
+    this.isFighting = true;
+    this.currentTurn = 1;
+    this.updateTurn();
+  }
+
+  updateTurn() {
+    const attackButton1 = this.querySelector('#attackButton1');
+    const attackButton2 = this.querySelector('#attackButton2');
+
+    if (attackButton1) attackButton1.style.display = 'none';
+    if (attackButton2) attackButton2.style.display = 'none';
+
+    if (this.currentTurn === 1) {
+      if (this.gameMode === 'pvp' || this.gameMode === 'pvc') {
+        if (attackButton1) {
+          attackButton1.style.display = 'block';
+        }
+      } else if (this.gameMode === 'cvc') {
+        // En modo CvC, CPU 1 ataca automáticamente
+        setTimeout(() => this.performAttack(1), 1000);
+      }
+    } else {
+      if (this.gameMode === 'pvp') {
+        if (attackButton2) {
+          attackButton2.style.display = 'block';
+        }
+      } else if (this.gameMode === 'pvc' || this.gameMode === 'cvc') {
+        // En modo PvC o CvC, CPU 2 ataca automáticamente
+        setTimeout(() => this.performAttack(2), 1000);
+      }
+    }
+  }
+
+  performAttack(attackerNumber) {
+    if (!this.isFighting) return;
+
+    const defenderNumber = attackerNumber === 1 ? 2 : 1;
+    const attacker = attackerNumber === 1 ? this.player1Data : this.player2Data;
+    const defender = defenderNumber === 1 ? this.player1Data : this.player2Data;
+
+    // Calcular daño
+    const attackValue = parseInt(attacker.abilities.attack) || 0;
+    const damageValue = parseInt(attacker.abilities.damage) || 0;
+    const strengthValue = parseInt(defender.abilities.strength) || 0;
+
+    const damage = Math.max(1, Math.floor(
+      (attackValue * 0.7) + 
+      (damageValue * 0.3) - 
+      (strengthValue * 0.2)
+    ));
+
+    console.log('Attack calculation:', {
+      attacker: attacker.name,
+      defender: defender.name,
+      attackValue,
+      damageValue,
+      strengthValue,
+      calculatedDamage: damage,
+      gameMode: this.gameMode
+    });
+
+    // Actualizar la vida
+    if (defenderNumber === 1) {
+      this.health1 = Math.max(0, this.health1 - damage);
+      const healthBar = this.querySelector('#vida1');
+      console.log('Player 1 health update:', {
+        newHealth: this.health1,
+        healthBarFound: !!healthBar
+      });
+      if (healthBar) {
+        healthBar.style.width = `${this.health1}%`;
+        this.updateHealthBarColor(healthBar, this.health1);
+      }
+    } else {
+      this.health2 = Math.max(0, this.health2 - damage);
+      const healthBar = this.querySelector('#vida2');
+      console.log('Player 2 health update:', {
+        newHealth: this.health2,
+        healthBarFound: !!healthBar
+      });
+      if (healthBar) {
+        healthBar.style.width = `${this.health2}%`;
+        this.updateHealthBarColor(healthBar, this.health2);
+      }
     }
 
-    // Usar las imágenes de los personajes seleccionados si están disponibles
+    // Mostrar efecto de daño
+    const damageOverlay = this.querySelector(`#damage-overlay-${defenderNumber}`);
+    if (damageOverlay) {
+      damageOverlay.classList.remove('opacity-0');
+      damageOverlay.classList.add('opacity-100');
+      setTimeout(() => {
+        damageOverlay.classList.remove('opacity-100');
+        damageOverlay.classList.add('opacity-0');
+      }, 300);
+    }
+
+    // Cambiar el turno
+    this.currentTurn = defenderNumber;
+    this.updateTurn();
+
+    // Verificar si el juego ha terminado
+    if (this.health1 <= 0 || this.health2 <= 0) {
+      this.endFight(attackerNumber);
+    }
+  }
+
+  updateHealthBarColor(healthBar, health) {
+    healthBar.classList.remove('bg-green-400', 'bg-yellow-400', 'bg-red-500');
+    if (health <= 30) {
+      healthBar.classList.add('bg-red-500');
+    } else if (health <= 60) {
+      healthBar.classList.add('bg-yellow-400');
+    } else {
+      healthBar.classList.add('bg-green-400');
+    }
+  }
+
+  endFight(winnerNumber) {
+    this.isFighting = false;
+    const winnerName = winnerNumber === 1 ? this.player1Data.name : this.player2Data.name;
+    alert(`¡${winnerName} ha ganado la batalla!`);
+  }
+
+  async render() {
     const player1Image = this.player1Data ? this.player1Data.image : player1;
     const player2Image = this.player2Data ? this.player2Data.image : player2;
     const player1Name = this.player1Data ? this.player1Data.name : 'Player 1';
@@ -57,8 +180,6 @@ export class AppFight extends HTMLElement {
 
     this.innerHTML = `
           <style>
-            @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
-
             .btn {
               position: relative;
               letter-spacing: 0.25em;
@@ -111,42 +232,11 @@ export class AppFight extends HTMLElement {
               left: 6.45rem;
             }
 
-            .hit-animation {
-              animation: shake 0.3s;
-            }
-
-            @keyframes shake {
-              0% {transform: translateX(0);}
-              25% {transform: translateX(-5px);}
-              50% {transform: translateX(5px);}
-              75% {transform: translateX(-5px);}
-              100% {transform: translateX(0);}
-            }
-
-            .damage-overlay {
-              position: absolute;
-              top: 0;
-              left: 0;
+            .health-bar {
               width: 100%;
               height: 100%;
-              background-color: rgba(255, 0, 0, 0.3);
-              opacity: 0;
-              transition: opacity 0.3s ease;
-              pointer-events: none;
-              z-index: 5;
-            }
-
-            .modal-close {
-              color: white !important;
-              font-size: 2rem;
-              opacity: 0.8;
-              transition: opacity 0.3s ease;
-              cursor: pointer;
-              text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            }
-
-            .modal-close:hover {
-              opacity: 1;
+              transition: width 0.5s ease-in-out;
+              will-change: width;
             }
           </style>
 
@@ -155,21 +245,24 @@ export class AppFight extends HTMLElement {
               <!-- Player 1 -->
               <div id="player1-card" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player1Image}');"></div>
-                <div id="damage-overlay-1" class="damage-overlay"></div>
+                <div id="damage-overlay-1" class="absolute top-0 left-0 w-full h-full bg-red-500/30 opacity-0 transition-opacity duration-300 pointer-events-none z-5"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
                   <h3 class="w-full text-2xl text-yellow-500 mt-0">${player1Name}</h3>
                   <div class="w-[90%] mb-4">
                     <p class="text-white text-xl skew-y-[3deg]">Vida</p>
                     <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                      <div id="vida1" class="h-full bg-green-400 transition-all duration-500" style="width: 100%;"></div>
+                      <div id="vida1" class="health-bar bg-green-400" style="width: ${this.health1}%;"></div>
                     </div>
                   </div>
-                  <div class="hidden group-hover:flex flex-col gap-1 text-sm text-white mt-2">
-                    <p>⚔️ Fuerza: 80</p>
-                    <p>🛡️ Defensa: 70</p>
-                    <p>💨 Velocidad: 65</p>
-                    <p>🎯 Precisión: 85</p>
+                  <div class="flex flex-col gap-1 text-sm text-white mt-2">
+                    <p>⚔️ Ataque: ${this.player1Data?.abilities.attack || '0'}</p>
+                    <p>🛡️ Fuerza: ${this.player1Data?.abilities.strength || '0'}</p>
+                    <p>💥 Daño: ${this.player1Data?.abilities.damage || '0'}</p>
+                    <p>⚠️ Debilidad: ${this.player1Data?.abilities.weakness || '0'}</p>
                   </div>
+                  ${this.gameMode === 'pvp' || this.gameMode === 'pvc' ? `
+                    <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
+                  ` : ''}
                 </div>
               </div>
 
@@ -181,213 +274,61 @@ export class AppFight extends HTMLElement {
               <!-- Player 2 -->
               <div id="player2-card" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player2Image}');"></div>
-                <div id="damage-overlay-2" class="damage-overlay"></div>
+                <div id="damage-overlay-2" class="absolute top-0 left-0 w-full h-full bg-red-500/30 opacity-0 transition-opacity duration-300 pointer-events-none z-5"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
                   <h3 class="w-full text-2xl text-yellow-500 mt-0">${player2Name}</h3>
                   <div class="w-[90%] mb-4">
                     <p class="text-white text-xl skew-y-[3deg]">Vida</p>
                     <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
-                      <div id="vida2" class="h-full bg-green-400 transition-all duration-500" style="width: 100%;"></div>
+                      <div id="vida2" class="health-bar bg-green-400" style="width: ${this.health2}%;"></div>
                     </div>
                   </div>
-                  <div class="hidden group-hover:flex flex-col gap-1 text-sm text-white mt-2">
-                    <p>⚔️ Fuerza: 90</p>
-                    <p>🛡️ Defensa: 60</p>
-                    <p>💨 Velocidad: 75</p>
-                    <p>🎯 Precisión: 80</p>
+                  <div class="flex flex-col gap-1 text-sm text-white mt-2">
+                    <p>⚔️ Ataque: ${this.player2Data?.abilities.attack || '0'}</p>
+                    <p>🛡️ Fuerza: ${this.player2Data?.abilities.strength || '0'}</p>
+                    <p>💥 Daño: ${this.player2Data?.abilities.damage || '0'}</p>
+                    <p>⚠️ Debilidad: ${this.player2Data?.abilities.weakness || '0'}</p>
                   </div>
+                  ${this.gameMode === 'pvp' ? `
+                    <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
+                  ` : ''}
                 </div>
               </div>
             </div>
 
-            <!-- Fight Button -->
+            <!-- Start Fight Button -->
             <div class="text-center mt-6">
-              <button id="fightBtn" class="btn">Fight</button>
-            </div>
-
-            <!-- Botones de ataque separados -->
-            <div id="attackButtonsPlayer1" class="mt-6 flex gap-4 hidden">
-              <button id="golpear1" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Golpear a Player 1</button>
-            </div>
-            <div id="attackButtonsPlayer2" class="mt-6 flex gap-4 hidden">
-              <button id="golpear2" class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">Golpear a Player 2</button>
-            </div>
-
-            <!-- Super Attack Buttons -->
-            <div id="superAttacks" class="mt-6 flex gap-4 hidden">
-              <button id="super1" class="bg-purple-700 px-4 py-2 rounded text-white hover:bg-purple-800">Super Ataque P1</button>
-              <button id="super2" class="bg-pink-600 px-4 py-2 rounded text-white hover:bg-pink-700">Super Ataque P2</button>
+              <button id="startFightButton" class="btn">Fight</button>
             </div>
           </div>
-
-          <div id="modal" class="modal hidden z-10 w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-70">
-        <div class="modal-content bg-black rounded-lg shadow-lg p-4 relative w-[90%] max-w-3xl">
-          <button id="closeModal" class="modal-close absolute top-2 right-4 cursor-pointer z-50">✖</button>
-          <video id="videoFrame" src="${video}" class="w-[90%] m-10 aspect-video rounded-md" autoplay controls muted></video>
-        </div>
-      </div>
-      
     `;
 
-    // Esperar a que el DOM esté listo
-    setTimeout(() => {
-      // Elementos
-      const fightBtn = this.querySelector("#fightBtn");
-      const attackButtonsP1 = this.querySelector("#attack-buttons-p1");
-      const attackButtonsP2 = this.querySelector("#attack-buttons-p2");
-      const superAttacks = this.querySelector("#super-attacks");
-      const super1 = this.querySelector("#super-attack-1");
-      const super2 = this.querySelector("#super-attack-2");
-      const modal = this.querySelector("#modal");
-      const closeModal = this.querySelector("#closeModal");
-      const vida1 = this.querySelector("#vida1");
-      const vida2 = this.querySelector("#vida2");
-      const videoFrame = this.querySelector("#videoFrame");
-      const player1Card = this.querySelector("#player1-card");
-      const player2Card = this.querySelector("#player2-card");
-      const damageOverlay1 = this.querySelector("#damage-overlay-1");
-      const damageOverlay2 = this.querySelector("#damage-overlay-2");
+    this.setupEventListeners();
+  }
 
-      if (!fightBtn || !modal || !closeModal || !vida1 || !vida2 || !videoFrame || !player1Card || !player2Card || !damageOverlay1 || !damageOverlay2) {
-        console.error("No se pudieron encontrar todos los elementos necesarios");
-        return;
-      }
+  setupEventListeners() {
+    const startFightButton = this.querySelector('#startFightButton');
+    const attackButton1 = this.querySelector('#attackButton1');
+    const attackButton2 = this.querySelector('#attackButton2');
 
-      // Variables de combate
-      let salud1 = 100;
-      let salud2 = 100;
-      let turno = 1;
-      let combateActivo = false;
-      let superAtaqueActivado = false;
-      let ganadorDeterminado = false;
-
-      const calcularGolpe = () => {
-        return Math.floor(Math.random() * 11) + 5;
-      };
-
-      const mostrarEfectoDaño = (jugador) => {
-        const overlay = jugador === 1 ? damageOverlay1 : damageOverlay2;
-        overlay.style.opacity = "1";
-        setTimeout(() => {
-          overlay.style.opacity = "0";
-        }, 300);
-      };
-
-      const actualizarBarraVida = (barra, salud, jugador) => {
-        barra.style.width = `${salud}%`;
-        barra.classList.remove("bg-green-400", "bg-yellow-400", "bg-red-500");
-
-        if (salud <= 30) {
-          barra.classList.add("bg-red-500");
-          if (!superAtaqueActivado) {
-            superAtaqueActivado = true;
-            activarSuperAtaque();
-          }
-        } else if (salud <= 60) {
-          barra.classList.add("bg-yellow-400");
-        } else {
-          barra.classList.add("bg-green-400");
-        }
-
-        const card = jugador === 1 ? player1Card : player2Card;
-        card.classList.add("hit-animation");
-        mostrarEfectoDaño(jugador);
-        setTimeout(() => card.classList.remove("hit-animation"), 300);
-      };
-
-      const activarSuperAtaque = () => {
-        modal.classList.remove("hidden");
-        videoFrame.play();
-      };
-
-      const determinarGanador = () => {
-        if (ganadorDeterminado) return;
-        ganadorDeterminado = true;
-
-        let mensaje = '';
-        if (salud1 > salud2) {
-          mensaje = '🏆 ¡Player 1 Gana!';
-        } else if (salud2 > salud1) {
-          mensaje = '🏆 ¡Player 2 Gana!';
-        } else {
-          mensaje = '🤝 ¡Empate!';
-        }
-
-        const mensajesAnteriores = document.querySelectorAll('.mensaje-ganador');
-        mensajesAnteriores.forEach(msg => msg.remove());
-
-        const resultadoDiv = document.createElement('div');
-        resultadoDiv.className = 'mensaje-ganador fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white p-8 rounded-lg text-3xl z-50';
-        resultadoDiv.textContent = mensaje;
-        document.body.appendChild(resultadoDiv);
-
-        if (salud1 <= 0 || salud2 <= 0) {
-          setTimeout(() => {
-            resultadoDiv.remove();
-            window.location.href = "/";
-          }, 3000);
-        } else {
-          setTimeout(() => {
-            resultadoDiv.remove();
-          }, 3000);
-        }
-      };
-
-      const ejecutarTurno = () => {
-        if (!combateActivo) return;
-
-        const golpe = calcularGolpe();
-
-        if (turno === 1) {
-          salud2 = Math.max(0, salud2 - golpe);
-          actualizarBarraVida(vida2, salud2, 2);
-          turno = 2;
-        } else {
-          salud1 = Math.max(0, salud1 - golpe);
-          actualizarBarraVida(vida1, salud1, 1);
-          turno = 1;
-        }
-
-        if (salud1 <= 0 || salud2 <= 0) {
-          combateActivo = false;
-          determinarGanador();
-        } else {
-          setTimeout(ejecutarTurno, 1000);
-        }
-      };
-
-      // Event Listeners
-      fightBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (!combateActivo) {
-          combateActivo = true;
-          fightBtn.classList.add("hidden");
-          ejecutarTurno();
-        }
+    if (startFightButton) {
+      startFightButton.addEventListener('click', () => {
+        this.startFight();
+        startFightButton.style.display = 'none';
       });
+    }
 
-      super1.addEventListener("click", () => {
-        activarSuperAtaque();
+    if (attackButton1) {
+      attackButton1.addEventListener('click', () => {
+        this.performAttack(1);
       });
+    }
 
-      super2.addEventListener("click", () => {
-        activarSuperAtaque();
+    if (attackButton2) {
+      attackButton2.addEventListener('click', () => {
+        this.performAttack(2);
       });
-
-      closeModal.addEventListener("click", () => {
-        modal.classList.add("hidden");
-        videoFrame.pause();
-        videoFrame.currentTime = 0;
-      });
-
-      videoFrame.addEventListener("ended", () => {
-        modal.classList.add("hidden");
-        videoFrame.currentTime = 0;
-        if (!ganadorDeterminado) {
-          determinarGanador();
-        }
-      });
-    }, 0);
+    }
   }
 }
 
