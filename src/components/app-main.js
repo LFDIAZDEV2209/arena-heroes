@@ -11,9 +11,9 @@ export class AppMain extends HTMLElement {
         return `
             <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
                 <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
-                    <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-30 sm:w-50 md:w-60 lg:w-[500px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
+                    <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-30 sm:w-50 md:w-60 lg:w-[350px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
                 </div>
-                <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-4 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-35 bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
+                <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-4 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-30 bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
                     <div class="relative">
                         <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
                         <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>

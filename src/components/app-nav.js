@@ -10,7 +10,7 @@ class AppNav extends HTMLElement {
 
   render() {
     this.innerHTML = `
-    <button id="sidebarToggle" class="sm:hidden fixed top-3 left-3 z-[100] p-2 rounded bg-black/80 text-white focus:outline-none">
+    <button id="sidebarToggle" class="sm:hidden fixed top-3 left-3 z-[100] p-1 rounded bg-black/80 text-white focus:outline-none">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-7 h-7">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>

@@ -9,12 +9,12 @@ export class AppCameos extends HTMLElement {
   async render() {
     const characterCameos = await getCharactersByType("base");
     this.innerHTML = `
-        <div class="container mx-auto px-14 p-5">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+        <div class="container  overflow-auto h-full justify-end sm:pl-30">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center p-10">
                     ${characterCameos.map((character, idx) => {
                         return `
-                        <div class="w-70 max-w-sm border-2 border-gray-300 shadow-xl -skew-x-12 [perspective:1000px] bg-gray-300">
-                            <div class="relative w-full h-[400px] transition-transform duration-500 card-inner-${idx}" style="transform-style: preserve-3d;">
+                        <div class="w-70 max-w-sm border-2 border-gray-300 shadow-xl -skew-x-12 [perspective:1000px] bg-gray-300 hover:scale-105 m-4">
+                            <div class="relative w-full h-[350px] transition-transform duration-500  card-inner-${idx}" style="transform-style: preserve-3d;">
                                 <!-- Cara frontal -->
                                 <div class="absolute inset-0 backface-hidden flex flex-col items-center py-10 z-10">
                                     <img src="${character.image}" alt="${character.name}" class="object-cover skew-x-10 w-40 h-56 mx-auto rounded transition-transform duration-300 hover:scale-120" />
