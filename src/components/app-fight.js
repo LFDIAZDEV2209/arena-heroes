@@ -6,14 +6,55 @@ const video = '/src/assets/video-main.mp4';
 export class AppFight extends HTMLElement {
   constructor() {
     super();
-    this.render();
+    this.player1Data = null;
+    this.player2Data = null;
+    this.gameMode = null;
   }
 
   connectedCallback() {
+    // Escuchar el evento startFight
+    document.addEventListener('startFight', (event) => {
+      this.player1Data = event.detail.player1;
+      this.player2Data = event.detail.player2;
+      this.gameMode = event.detail.gameMode;
+      this.render();
+    });
+
+    // Si ya tenemos los datos (por ejemplo, si la página se recargó), intentar recuperarlos
+    if (!this.player1Data || !this.player2Data) {
+      const storedData = sessionStorage.getItem('fightData');
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        this.player1Data = data.player1;
+        this.player2Data = data.player2;
+        this.gameMode = data.gameMode;
+      }
+    }
+
     this.render();
   }
 
+  disconnectedCallback() {
+    // Limpiar el listener cuando el componente se desconecta
+    document.removeEventListener('startFight', this.handleFightEvent);
+  }
+
   async render() {
+    // Guardar los datos en sessionStorage para persistencia
+    if (this.player1Data && this.player2Data) {
+      sessionStorage.setItem('fightData', JSON.stringify({
+        player1: this.player1Data,
+        player2: this.player2Data,
+        gameMode: this.gameMode
+      }));
+    }
+
+    // Usar las imágenes de los personajes seleccionados si están disponibles
+    const player1Image = this.player1Data ? this.player1Data.image : player1;
+    const player2Image = this.player2Data ? this.player2Data.image : player2;
+    const player1Name = this.player1Data ? this.player1Data.name : 'Player 1';
+    const player2Name = this.player2Data ? this.player2Data.name : 'Player 2';
+
     this.innerHTML = `
           <style>
             @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
@@ -113,10 +154,10 @@ export class AppFight extends HTMLElement {
             <div class="flex justify-center items-center flex-row w-4/5 mx-auto m-8">
               <!-- Player 1 -->
               <div id="player1-card" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-                <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player1}');"></div>
+                <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player1Image}');"></div>
                 <div id="damage-overlay-1" class="damage-overlay"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
-                  <h3 class="w-full text-2xl text-yellow-500 mt-0">Player 1</h3>
+                  <h3 class="w-full text-2xl text-yellow-500 mt-0">${player1Name}</h3>
                   <div class="w-[90%] mb-4">
                     <p class="text-white text-xl skew-y-[3deg]">Vida</p>
                     <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
@@ -139,10 +180,10 @@ export class AppFight extends HTMLElement {
 
               <!-- Player 2 -->
               <div id="player2-card" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-                <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player2}');"></div>
+                <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player2Image}');"></div>
                 <div id="damage-overlay-2" class="damage-overlay"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
-                  <h3 class="w-full text-2xl text-yellow-500 mt-0">Player 2</h3>
+                  <h3 class="w-full text-2xl text-yellow-500 mt-0">${player2Name}</h3>
                   <div class="w-[90%] mb-4">
                     <p class="text-white text-xl skew-y-[3deg]">Vida</p>
                     <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden">

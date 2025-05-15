@@ -7,6 +7,22 @@ export class AppMain extends HTMLElement {
         this.setupEventListeners();
     }
 
+    getHomeContent() {
+        return `
+            <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
+                <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
+                    <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-30 sm:w-50 md:w-60 lg:w-[500px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
+                </div>
+                <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-4 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-35 bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
+                    <div class="relative">
+                        <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
+                        <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
     render() {
         this.innerHTML = `
             <div class="relative w-full min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('https://www.mksecrets.net/images/mk9/arena07.png');">
@@ -15,23 +31,13 @@ export class AppMain extends HTMLElement {
                 </div>
                 <div id="main-view" class="hidden transition-opacity duration-500 opacity-0">
                     <app-nav class="fixed top-0 left-0 w-full z-50 pr-20"></app-nav>
-                    <div id="content-view" class="mx-auto px-4 sm:px-8 md:px-14 lg:px-20 p-3 sm:p-5 pt-20 sm:pt-25 transition-opacity duration-500 opacity-100 w-full max-w-7xl">
-                        <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
-                            <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
-                                <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-48 sm:w-64 md:w-80 lg:w-[600px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
-                            </div>
-                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-8 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
-                                <div class="relative">
-                                    <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
-                                    <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
-                                </div>
-                            </div>
-                        </section>
+                    <div id="content-view" class="mx-auto px-4 sm:px-8 md:px-14 lg:px-20 p-3 sm:p-5 pt-15 sm:pt-15 transition-opacity duration-500 opacity-100 w-full max-w-7xl">
+                        ${this.getHomeContent()}
                     </div>
                 </div>
             </div>
         `;
-        this.typewriterEffect('Empieza el reinado del caos');
+        this.typewriterEffect('Empieza el reinado del kaos');
         this.setupLogoSpin();
     }
 
@@ -57,20 +63,39 @@ export class AppMain extends HTMLElement {
                 } else if (section === 'cameos') {
                     contentView.innerHTML = '<app-cameos></app-cameos>';
                 } else if (section === 'home') {
-                    contentView.innerHTML = `
-                        <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
-                            <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
-                                <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-48 sm:w-64 md:w-80 lg:w-[600px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
-                            </div>
-                            <div class="contenido clip-path-custom -skew-x-12 overflow-hidden p-4 sm:p-6 md:p-8 w-full sm:w-4/5 md:w-[60%] lg:w-[35%] h-auto bg-gradient-to-b from-[#f4e179] via-[#c1972a] to-[#a26808] border-[0.5em] border-[#c1972a] transform hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] mx-auto">
-                                <div class="relative">
-                                    <h3 class="text-xl md:text-2xl lg:text-3xl text-white mt-2 font-bold drop-shadow-lg"><span id="typewriter"></span></h3>
-                                    <p class="text-base md:text-lg lg:text-xl text-gray-200 mt-2 drop-shadow-md">Sangre, Honor y Batalla sin Fin</p>
-                                </div>
-                            </div>
-                        </section>
-                    `;
-                    this.typewriterEffect('Empieza el reinado del caos');
+                    contentView.innerHTML = this.getHomeContent();
+                    this.typewriterEffect('Empieza el reinado del kaos');
+                    this.setupLogoSpin();
+                }
+                this.fadeIn(contentView);
+            });
+        });
+
+        // Add event listener for game mode selection
+        document.addEventListener('gameModeSelected', (e) => {
+            const contentView = this.querySelector('#content-view');
+            const gameMode = e.detail.mode;
+            this.fadeOut(contentView, () => {
+                contentView.innerHTML = `<app-selector game-mode="${gameMode}"></app-selector>`;
+                this.fadeIn(contentView);
+            });
+        });
+
+        // Add event listener for view change (including fight view)
+        document.addEventListener('viewChange', (e) => {
+            const contentView = this.querySelector('#content-view');
+            const view = e.detail.view;
+            const data = e.detail.data;
+
+            this.fadeOut(contentView, () => {
+                if (view === 'fight') {
+                    contentView.innerHTML = '<app-fight></app-fight>';
+                    // Esperar a que el componente se monte antes de enviar los datos
+                    setTimeout(() => {
+                        document.dispatchEvent(new CustomEvent('startFight', {
+                            detail: data
+                        }));
+                    }, 0);
                 }
                 this.fadeIn(contentView);
             });
