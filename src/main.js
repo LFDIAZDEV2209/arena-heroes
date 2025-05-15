@@ -5,3 +5,4 @@ import "./components/app-dlc.js";
 import "./components/app-main.js";
 import "./components/app-arenas.js";
 import "./components/app-cameos.js";
+import "./components/app-selector.js";
