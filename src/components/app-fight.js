@@ -166,10 +166,44 @@ export class AppFight extends HTMLElement {
     }
   }
 
+  showModalWinner(winnerNumber) {
+    const winnerName = winnerNumber === 1 ? this.player1Data.name : this.player2Data.name;
+    const winnerImage = winnerNumber === 1 ? this.player1Data.image : this.player2Data.image;
+    const loserImage = winnerNumber === 1 ? this.player2Data.image : this.player1Data.image;
+    const loserName = winnerNumber === 1 ? this.player2Data.name : this.player1Data.name;
+
+    console.log('[showModalWinner] Renderizando app-ganador con:', {
+      winnerName, winnerImage, loserName, loserImage, winnerNumber, player1Data: this.player1Data, player2Data: this.player2Data
+    });
+
+    // Crear el componente app-ganador
+    const ganadorComponent = document.createElement('app-ganador');
+    ganadorComponent.setAttribute('winner-name', winnerName);
+    ganadorComponent.setAttribute('winner-image', winnerImage);
+    ganadorComponent.setAttribute('loser-name', loserName);
+    ganadorComponent.setAttribute('loser-image', loserImage);
+    
+    // Reemplazar el contenido actual con el componente ganador
+    this.innerHTML = '';
+    this.appendChild(ganadorComponent);
+
+    // Agregar evento para el botón de volver
+    const backBtn = ganadorComponent.querySelector('#backBtn');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        // Disparar evento para volver a la vista principal
+        document.dispatchEvent(new CustomEvent('viewChange', {
+          detail: {
+            view: 'home'
+          }
+        }));
+      });
+    }
+  }
+
   endFight(winnerNumber) {
     this.isFighting = false;
-    const winnerName = winnerNumber === 1 ? this.player1Data.name : this.player2Data.name;
-    alert(`¡${winnerName} ha ganado la batalla!`);
+    this.showModalWinner(winnerNumber);
   }
 
   async render() {
