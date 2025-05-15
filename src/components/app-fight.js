@@ -274,10 +274,10 @@ export class AppFight extends HTMLElement {
             }
           </style>
 
-          <div class="w-screen h-screen flex flex-col items-center justify-center">
-            <div class="flex justify-center items-center flex-row w-4/5 mx-auto m-8">
+          <div class="w-[90vw] h-screen flex flex-col items-center justify-center">
+            <div class="flex flex-col sm:flex-row justify-center items-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-8">
               <!-- Player 1 -->
-              <div id="player1-card" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <div id="player1-card" class="group relative w-full max-w-xs sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer mb-4 sm:mb-0">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player1Image}');"></div>
                 <div id="damage-overlay-1" class="absolute top-0 left-0 w-full h-full bg-red-500/30 opacity-0 transition-opacity duration-300 pointer-events-none z-5"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
@@ -301,12 +301,12 @@ export class AppFight extends HTMLElement {
               </div>
 
               <!-- VS -->
-              <div class="flex items-center justify-center w-[200px]">
-                <img src="${vs}" alt="versus" class="w-full h-auto" />
+              <div class="flex items-center justify-center w-full sm:w-[200px] my-4 sm:my-0">
+                <img src="${vs}" alt="versus" class="w-24 h-24 sm:w-full sm:h-auto" />
               </div>
 
               <!-- Player 2 -->
-              <div id="player2-card" class="group relative w-[300px] h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <div id="player2-card" class="group relative w-full max-w-xs sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player2Image}');"></div>
                 <div id="damage-overlay-2" class="absolute top-0 left-0 w-full h-full bg-red-500/30 opacity-0 transition-opacity duration-300 pointer-events-none z-5"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
