@@ -2,7 +2,37 @@ export class AppArenas extends HTMLElement{
     constructor(){
         super();
         this.render();
+        this.setupEventListeners();
     }
+
+    setupEventListeners() {
+        this.addEventListener('click', (e) => {
+            const pvpSection = e.target.closest('.border-yellow-600');
+            const pvcSection = e.target.closest('.border-red-600');
+            const cvcSection = e.target.closest('.border-blue-600');
+
+            if (pvpSection) {
+                this.dispatchEvent(new CustomEvent('gameModeSelected', {
+                    detail: { mode: 'pvp' },
+                    bubbles: true,
+                    composed: true
+                }));
+            } else if (pvcSection) {
+                this.dispatchEvent(new CustomEvent('gameModeSelected', {
+                    detail: { mode: 'pvc' },
+                    bubbles: true,
+                    composed: true
+                }));
+            } else if (cvcSection) {
+                this.dispatchEvent(new CustomEvent('gameModeSelected', {
+                    detail: { mode: 'cvc' },
+                    bubbles: true,
+                    composed: true
+                }));
+            }
+        });
+    }
+
     render(){
         this.innerHTML=`
         <div class="containerArenas mx-auto px-2 sm:px-6 md:px-14 p-2 sm:p-5">

@@ -70,6 +70,16 @@ export class AppMain extends HTMLElement {
                 this.fadeIn(contentView);
             });
         });
+
+        // Add event listener for game mode selection
+        document.addEventListener('gameModeSelected', (e) => {
+            const contentView = this.querySelector('#content-view');
+            const gameMode = e.detail.mode;
+            this.fadeOut(contentView, () => {
+                contentView.innerHTML = `<app-selector game-mode="${gameMode}"></app-selector>`;
+                this.fadeIn(contentView);
+            });
+        });
     }
 
     typewriterEffect(text) {
