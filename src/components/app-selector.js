@@ -122,13 +122,42 @@ export class AppSelector extends HTMLElement {
                 // La CPU selecciona su personaje automáticamente
                 await this.selectCPUCharacter();
                 console.log('CPU ha seleccionado su personaje');
+                // Redirigir a la vista de lucha después de que la CPU seleccione
+                this.redirectToFight();
             }
         } else if (playerNumber === 2) {
             this.confirmedSelections.player2 = true;
-            // Aquí puedes agregar la lógica para iniciar el juego
-            console.log('Ambos jugadores han seleccionado sus personajes');
+            // Redirigir a la vista de lucha cuando el jugador 2 confirma
+            this.redirectToFight();
         }
         this.updatePlayerCard(playerNumber);
+    }
+
+    redirectToFight() {
+        // Crear un evento personalizado con los datos de los personajes seleccionados
+        const fightEvent = new CustomEvent('startFight', {
+            detail: {
+                player1: this.selectedCharacters.player1,
+                player2: this.selectedCharacters.player2,
+                gameMode: this.gameMode
+            }
+        });
+        
+        // Crear un evento para cambiar la vista
+        const viewChangeEvent = new CustomEvent('viewChange', {
+            detail: {
+                view: 'fight',
+                data: {
+                    player1: this.selectedCharacters.player1,
+                    player2: this.selectedCharacters.player2,
+                    gameMode: this.gameMode
+                }
+            }
+        });
+        
+        // Despachar los eventos
+        document.dispatchEvent(fightEvent);
+        document.dispatchEvent(viewChangeEvent);
     }
 
     async selectRandomCharacter(playerNumber) {

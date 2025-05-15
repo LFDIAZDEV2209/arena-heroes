@@ -80,6 +80,26 @@ export class AppMain extends HTMLElement {
                 this.fadeIn(contentView);
             });
         });
+
+        // Add event listener for view change (including fight view)
+        document.addEventListener('viewChange', (e) => {
+            const contentView = this.querySelector('#content-view');
+            const view = e.detail.view;
+            const data = e.detail.data;
+
+            this.fadeOut(contentView, () => {
+                if (view === 'fight') {
+                    contentView.innerHTML = '<app-fight></app-fight>';
+                    // Esperar a que el componente se monte antes de enviar los datos
+                    setTimeout(() => {
+                        document.dispatchEvent(new CustomEvent('startFight', {
+                            detail: data
+                        }));
+                    }, 0);
+                }
+                this.fadeIn(contentView);
+            });
+        });
     }
 
     typewriterEffect(text) {
