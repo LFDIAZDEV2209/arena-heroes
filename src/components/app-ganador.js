@@ -1,0 +1,64 @@
+const player1 = '/img/cyraxSMALL.webp';
+const player2 = '/img/quan chiSMALL.webp';
+const vs = '/img/vsLOGO.png';
+
+export class AppGanador extends HTMLElement {
+  constructor() {
+    super();
+    this.render();
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  async render() {
+    this.innerHTML = `
+      <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+        @keyframes shake {
+          0% {transform: translateX(0);}
+          25% {transform: translateX(-5px);}
+          50% {transform: translateX(5px);}
+          75% {transform: translateX(-5px);}
+          100% {transform: translateX(0);}
+        }
+      </style>
+
+      <div class="w-screen h-screen flex flex-col items-center justify-center">
+        <div class="flex justify-center items-center flex-row w-4/5 mx-auto m-8">
+          <!-- Player 1 -->
+          <div id="player1-card" class="group relative w-[350px] h-[450px] flex-col flex items-center border-10 border-amber-300 overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+            <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player1}');"></div>
+            <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
+              <h3 class="w-full text-2xl text-yellow-500 mt-0">Player 1</h3>
+              <div class="w-[150px] h-[60px] bg-gradient-to-r from-[#E2B077] to-[#EBB43C] border-0 -skew-3">
+                  <h3 class="font-semibold text-3xl justify-self-center-safe pt-2">Ganador</h3>
+              </div>
+              </div>
+            </div>
+
+          <!-- VS -->
+          <div class="flex items-center justify-center w-[200px]">
+            <img src="${vs}" alt="versus" class="w-full h-auto" />
+          </div>
+
+          <!-- Player 2 -->
+          <div id="player2-card" class="group relative w-[200px] h-[300px] border-2 border-gray-300 overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+            <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player2}');"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-black opacity-40 "></div>
+            <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
+              <h3 class="w-full text-1xl text-yellow-500 mt-0">Player 2</h3>
+            </div>
+          </div>
+          </div>
+          <!-- Back Button -->
+        <div class="text-center w-[150px] h-[60px] bg-gradient-to-r from-[#E2B077] to-[#EBB43C] border-0 -skew-3 font-semibold text-3xl justify-self-center-safe pt-2">
+            <a href="#" id="backBtn" class="btn colo">Volver</a>
+        </div>
+        `;
+        
+    }
+}
+customElements.define("app-ganador", AppGanador);
