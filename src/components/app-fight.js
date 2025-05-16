@@ -368,7 +368,7 @@ export class AppFight extends HTMLElement {
                     src="${video}"
                     class="w-[90%] m-10 aspect-video rounded-md"
                     autoplay
-                    controls
+                    playsinline
                     muted></video>
             </div>
         </div>
