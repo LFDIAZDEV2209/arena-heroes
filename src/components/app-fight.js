@@ -14,6 +14,7 @@ export class AppFight extends HTMLElement {
     this.health1 = 100;
     this.health2 = 100;
     this.handleFightEvent = this.handleFightEvent.bind(this);
+
   }
 
   handleFightEvent(event) {
@@ -184,6 +185,20 @@ export class AppFight extends HTMLElement {
     ganadorComponent.setAttribute('loser-image', loserImage);
     
     // Reemplazar el contenido actual con el componente ganador
+    // this.innerHTML = '';
+    // videoFrame.pause();
+    // videoFrame.currentTime = 0;
+    // this.appendChild(ganadorComponent);
+
+    const modal = this.querySelector("#modal");
+    const videoFrame = this.querySelector("#videoFrame");
+    if (videoFrame) {
+      videoFrame.pause();
+      videoFrame.currentTime = 0;
+    }
+    if (modal) {
+      modal.classList.add("hidden");
+    }
     this.innerHTML = '';
     this.appendChild(ganadorComponent);
 
@@ -203,7 +218,15 @@ export class AppFight extends HTMLElement {
 
   endFight(winnerNumber) {
     this.isFighting = false;
-    this.showModalWinner(winnerNumber);
+    const modal = this.querySelector("#modal");
+    const videoFrame = this.querySelector("#videoFrame");
+    if (modal) {
+      modal.classList.remove("hidden");
+    }
+    if (videoFrame) {
+      videoFrame.play();
+    }
+    setTimeout(() => this.showModalWinner(winnerNumber), 2000); 
   }
 
   async render() {
@@ -288,12 +311,12 @@ export class AppFight extends HTMLElement {
                       <div id="vida1" class="health-bar bg-green-400" style="width: ${this.health1}%;"></div>
                     </div>
                   </div>
-                  <div class="flex flex-col gap-1 text-sm text-white mt-2">
-                    <p>⚔️ Ataque: ${this.player1Data?.abilities.attack || '0'}</p>
-                    <p>🛡️ Fuerza: ${this.player1Data?.abilities.strength || '0'}</p>
-                    <p>💥 Daño: ${this.player1Data?.abilities.damage || '0'}</p>
-                    <p>⚠️ Debilidad: ${this.player1Data?.abilities.weakness || '0'}</p>
-                  </div>
+                  <div class="hidden group-hover:flex flex-col gap-1 text-sm text-white mt-2">
+                    <p>⚔️ Fuerza:   ${this.player1Data?.abilities.attack || '0'}</p>
+                    <p>🛡️ Defensa:  ${this.player1Data?.abilities.strength || '0'}</p>
+                    <p>💨 Velocidad:${this.player1Data?.abilities.damage || '0'}</p>
+                    <p>🎯 Precisión:${this.player1Data?.abilities.weakness || '0'}</p>
+                </div>
                   ${this.gameMode === 'pvp' || this.gameMode === 'pvc' ? `
                     <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
                   ` : ''}
@@ -317,12 +340,12 @@ export class AppFight extends HTMLElement {
                       <div id="vida2" class="health-bar bg-green-400" style="width: ${this.health2}%;"></div>
                     </div>
                   </div>
-                  <div class="flex flex-col gap-1 text-sm text-white mt-2">
-                    <p>⚔️ Ataque: ${this.player2Data?.abilities.attack || '0'}</p>
-                    <p>🛡️ Fuerza: ${this.player2Data?.abilities.strength || '0'}</p>
-                    <p>💥 Daño: ${this.player2Data?.abilities.damage || '0'}</p>
-                    <p>⚠️ Debilidad: ${this.player2Data?.abilities.weakness || '0'}</p>
-                  </div>
+                  <div class="hidden group-hover:flex flex-col gap-1 text-sm text-white mt-2">
+                    <p>⚔️ Fuerza:   ${this.player2Data?.abilities.attack || '0'}</p>
+                    <p>🛡️ Defensa:  ${this.player2Data?.abilities.strength || '0'}</p>
+                    <p>💨 Velocidad:${this.player2Data?.abilities.damage || '0'}</p>
+                    <p>🎯 Precisión:${this.player2Data?.abilities.weakness || '0'}</p>
+                </div>
                   ${this.gameMode === 'pvp' ? `
                     <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
                   ` : ''}
@@ -335,6 +358,20 @@ export class AppFight extends HTMLElement {
               <button id="startFightButton" class="btn">Fight</button>
             </div>
           </div>
+
+          <!-- Modal -->
+        <div id="modal"
+            class="modal hidden z-10 w-full h-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-70">
+            <div class="modal-content bg-black rounded-lg shadow-lg p-4 relative w-[90%] max-w-3xl">
+            <button id="closeModal" class="modal-close absolute top-2 right-4 cursor-pointer z-50">✖</button>
+            <video id="videoFrame"
+                    src="${video}"
+                    class="w-[90%] m-10 aspect-video rounded-md"
+                    autoplay
+                    controls
+                    muted></video>
+            </div>
+        </div>
     `;
 
     this.setupEventListeners();
@@ -344,6 +381,7 @@ export class AppFight extends HTMLElement {
     const startFightButton = this.querySelector('#startFightButton');
     const attackButton1 = this.querySelector('#attackButton1');
     const attackButton2 = this.querySelector('#attackButton2');
+
 
     if (startFightButton) {
       startFightButton.addEventListener('click', () => {

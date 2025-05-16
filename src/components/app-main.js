@@ -25,13 +25,16 @@ export class AppMain extends HTMLElement {
 
     render() {
         this.innerHTML = `
-            <div class="relative w-full min-h-screen bg-cover bg-center bg-no-repeat" style="background-image: url('https://www.mksecrets.net/images/mk9/arena07.png');">
-                <div id="welcome-view" class="transition-opacity duration-500 opacity-100">
+            <div class="relative w-full min-h-screen ">
+                <div id="welcome-view" class="transition-opacity duration-500 opacity-100 flex items-center justify-center">
                     <app-welcome></app-welcome>
                 </div>
                 <div id="main-view" class="hidden transition-opacity duration-500 opacity-0">
                     <app-nav class="fixed top-0 left-0 w-full z-50 pr-20"></app-nav>
-                    <div id="content-view" class="mx-auto px-4 sm:px-8 md:px-14 lg:px-20 p-3 sm:p-5 pt-15 sm:pt-15 transition-opacity duration-500 opacity-100 w-full max-w-7xl">
+                    <div id="content-view" mx-auto w-full max-w-full sm:max-w-4xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl
+           px-2 sm:px-6 md:px-10 lg:px-16 xl:px-20
+           py-4 sm:py-8 md:py-10
+           transition-opacity duration-500 opacity-100 min-h-[60vh]">
                         ${this.getHomeContent()}
                     </div>
                 </div>

@@ -10,10 +10,10 @@ class AppWelcome extends HTMLElement {
 
   async render() {
     this.innerHTML = `
-      <div class="welcomehome fixed inset-0 w-full h-full p-2 sm:p-5 font-sans text-white bg-cover bg-center bg-no-repeat" style="background-image: url('https://www.mksecrets.net/images/mk9/arena07.png');">
-        <section class="sect1 absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-3 sm:gap-5 text-center">
-          <div class="logo1">
-            <img src="${logo}" alt="logo mortal kombat" class="w-40 sm:w-80 md:max-w-[600px] h-auto mx-auto">
+      <div class="welcomehome fixed inset-0 w-full h-full p-2 sm:p-5 font-sans text-white;">
+        <section class="sect1 flex flex-col items-center justify-center  absolute inset-0 w-full h-full  gap-3 sm:gap-5 text-center">
+          <div class="logo1 flex justify-center w-full">
+            <img src="${logo}" alt="logo mortal kombat" class=" md:max-w-[600px]  mx-auto x-auto w-32 sm:w-48 md:w-60 lg:w-[350px] h-auto drop-shadow-2xl transition-transform duration-700 hover:scale-110">
           </div>
           <div class="logo2 hidden">
             <img src="${logoLetras}" alt="letras mortal kombat" class="w-40 sm:w-80 md:max-w-[600px] h-auto mx-auto">
@@ -21,16 +21,16 @@ class AppWelcome extends HTMLElement {
         </section>
         <section class="sect2 absolute inset-0 w-full h-full bg-slate-950 bg-opacity-10 flex flex-col items-center justify-center gap-3 sm:gap-5 text-center shadow-[0_0_30px_rgba(0,0,0,0.7)] z-[5] transition-opacity ease-in duration-500">
           <div class="videoclip w-full sm:w-2/3 md:w-1/2 h-[40vh] sm:h-[60%] flex items-center justify-center p-2 sm:p-4 mx-auto">
-            <video 
-              class="w-full h-full object-cover rounded-lg shadow-[0_0_100px_rgba(255,165,0,0.5)] hover:shadow-[0_0_30px_rgba(255,165,0,0.7)] transition-all duration-300"
-              autoplay  
-              loop
-              playsinline
-              src="${videoMain}"
-            >
-              <source src="${videoMain}" type="video/mp4">
-              Tu navegador no soporta el elemento de video.
-            </video>
+          <video 
+            class="w-full h-full object-cover rounded-lg shadow-[0_0_100px_rgba(255,165,0,0.5)] hover:shadow-[0_0_30px_rgba(255,165,0,0.7)] transition-all duration-300"
+            autoplay  
+            loop
+            playsinline
+            src="${videoMain}"
+          >
+            <source src="${videoMain}" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+          </video>
           </div>
           <div class="contenido2">
             <p class="text-xl sm:text-2xl font-bold ">MORTAL KOMBAT</p>
