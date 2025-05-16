@@ -17,9 +17,9 @@ class AppNav extends HTMLElement {
     </button>
     <div id="sidebar" class="hidden flex-row sm:flex-col fixed sm:fixed left-0 top-0 w-50 sm:w-40 h-full sm:h-screen bg-black/80 z-50 shadow-lg transition-transform duration-300 -translate-x-full sm:translate-x-0">
       <div class="flex items-center justify-center sm:justify-center w-full h-16 sm:h-32 p-2 sm:pt-8">
-        <img src="${logo}" alt="logo mortal kombat" class="h-10 sm:h-20 w-auto mx-auto">
+        <img src="${logo}" alt="logo mortal kombat" class="h-10 sm:h-15 w-auto ">
       </div>
-      <nav class="nav flex flex-1 flex-col items-center justify-center sm:justify-auto w-[85%] sm:w-auto gap-2 sm:gap-4 px-2 sm:px-4 py-2 sm:py-4">
+      <nav class="nav flex flex-1 flex-col items-center justify-center sm:justify-auto w-auto sm:w-auto gap-2 sm:gap-2 px-2 sm:px-2 py-2 sm:py-4">
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'home' ? 'active' : ''}" data-section="home">HOME</button>
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'cameos' ? 'active' : ''}" data-section="cameos">CAMEOS</button>
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#813E17] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'dlc' ? 'active' : ''}" data-section="dlc">DLC</button>
