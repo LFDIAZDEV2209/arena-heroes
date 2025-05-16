@@ -299,7 +299,7 @@ export class AppSelector extends HTMLElement {
         // Asegúrate de tener <meta name="viewport" content="width=device-width, initial-scale=1"> en tu index.html
         const characterSelector = await getCharacters(); 
         this.innerHTML = `
-            <div class="w-[90vw] h-screen flex flex-col items-center justify-center">
+            <div class="w-auto h-screen flex flex-col items-center justify-center">
                 <div class="flex flex-col sm:flex-row items-center justify-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-5 pr-3">
                     ${this.getPlayerCard(1, this.gameMode === 'cvc')}
                     <!-- VS -->
