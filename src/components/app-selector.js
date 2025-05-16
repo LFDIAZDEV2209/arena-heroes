@@ -276,10 +276,7 @@ export class AppSelector extends HTMLElement {
                                 <span class="text-red-400">${selectedCharacter.abilities.weakness}</span>
                             </p>
                         ` : `
-                            <p>⚔ </p>
-                            <p>🛡 </p>
-                            <p>💨 </p>
-                            <p>🎯 </p>
+
                         `}
                         ${showRandomButton ? 
                             `<button class="random-selection bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded mt-2 sm:mt-4 transition-colors duration-300 text-xs sm:text-base" data-player="${playerNumber}">

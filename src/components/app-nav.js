@@ -22,8 +22,8 @@ class AppNav extends HTMLElement {
       <nav class="nav flex flex-1 flex-col items-center justify-center sm:justify-auto w-auto sm:w-auto gap-2 sm:gap-2 px-2 sm:px-2 py-2 sm:py-4">
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'home' ? 'active' : ''}" data-section="home">HOME</button>
         <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'cameos' ? 'active' : ''}" data-section="cameos">CAMEOS</button>
-        <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#813E17] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'dlc' ? 'active' : ''}" data-section="dlc">DLC</button>
-        <button class="btn-nav bg-gradient-to-r from-[#F7D5AF] to-[#813E17] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'arena' ? 'active' : ''}" data-section="arena">ARENA</button>
+        <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'dlc' ? 'active' : ''}" data-section="dlc">DLC</button>
+        <button class="btn-nav bg-gradient-to-r from-[#E2B077] to-[#EBB43C] transform hover:scale-110 hover:shadow-lg hover:shadow-red-500/50 transition-all duration-300 ${this.activeSection === 'arena' ? 'active' : ''}" data-section="arena">ARENA</button>
       </nav>
     </div>
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden sm:hidden"></div>

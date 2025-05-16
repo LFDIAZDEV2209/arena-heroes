@@ -55,7 +55,7 @@ export class AppGanador extends HTMLElement {
       <div class="w-[90vw] h-screen flex flex-col items-center justify-center">
         <div class="flex flex-col sm:flex-row justify-center items-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-8">
           <!-- Ganador -->
-          <div id="player1-card" class="winner-card group relative w-full max-w-xs sm:w-[350px] sm:h-[450px] flex-col flex items-center border-10 border-amber-300 overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer mb-4 sm:mb-0">
+          <div id="player1-card" class="winner-card group relative w-full max-w-xs sm:w-[350px] sm:h-[450px] flex-col flex items-center border-10 border-amber-300 overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 mb-4 sm:mb-0">
             <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${this.winnerImage || player1}');"></div>
             <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
               <h3 class="w-full text-2xl text-yellow-500 mt-0">${this.winnerName || 'Player 1'}</h3>
@@ -69,7 +69,7 @@ export class AppGanador extends HTMLElement {
             <img src="${vs}" alt="versus" class="w-24 h-24 sm:w-full sm:h-auto" />
           </div>
           <!-- Perdedor -->
-          <div id="player2-card" class="group relative w-full max-w-xs sm:w-[200px] sm:h-[300px] border-2 border-gray-300 overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+          <div id="player2-card" class="group relative w-full max-w-xs sm:w-[200px] sm:h-[300px] border-2 border-gray-300 overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300">
             <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${this.loserImage || player2}');"></div>
             <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-black opacity-40"></div>
             <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
