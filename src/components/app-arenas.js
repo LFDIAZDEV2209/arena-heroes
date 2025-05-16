@@ -38,7 +38,7 @@ export class AppArenas extends HTMLElement{
 
     render(){
         this.innerHTML=`
-          <div class="containerArenas grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-5 max-w-[1200px] mx-auto p-16">
+          <div class="containerArenas grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-5 max-w-[900px] mx-auto p-15">
             <!-- Player vs Player -->
             <div class="border-4 border-yellow-600 rounded-lg bg-opacity-10 p-6 cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105">
               <h2 class="arena-title text-center text-yellow-400 font-bold text-xl mb-4">Player vs Player</h2>

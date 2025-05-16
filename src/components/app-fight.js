@@ -274,7 +274,7 @@ export class AppFight extends HTMLElement {
             }
           </style>
 
-          <div class="w-[90vw] h-screen flex flex-col items-center justify-center">
+          <div class="w-[90%] h-screen flex flex-col items-center justify-center">
             <div class="flex flex-col sm:flex-row justify-center items-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-8">
               <!-- Player 1 -->
               <div id="player1-card" class="group relative w-full max-w-xs sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer mb-4 sm:mb-0">

@@ -21,8 +21,8 @@ export class AppCameos extends HTMLElement {
                                     <button class="bg-yellow-300 text-black font-semibold rounded px-8 py-1 mt-4 mx-auto block btn-view" data-idx="${idx}">Info</button>
                                 </div>
                                 <!-- Cara trasera limpia -->
-                                <div class="absolute inset-0 backface-hidden shadow-xl flex items-center justify-center rotate-y-180 z-20">
-                                    <div class="w-full h-full flex flex-col items-center justify-center gap-2 py-10">
+                                <div class="absolute inset-0 backface-hidden shadow-xl flex items-center justify-center rotate-y-180 z-20 overflow-hidden">
+                                    <div class="w-full h-full flex flex-col items-center justify-center py-15 overflow-hidden">
                                         <img src="${character.image}" alt="${character.name}" class=" skew-x-10 w-30 h-46 opacity-30" />
                                         <h3 class="text-2xl font-bold">
                                             ${character.name}
@@ -36,7 +36,7 @@ export class AppCameos extends HTMLElement {
                                         <p class="text-sm">
                                             Trajes: ${character.suits.join(', ')}
                                         </p>
-                                        <button class="btn-back bg-red-200 text-black font-semibold rounded px-8 py-1 mt-4 mx-auto block " data-idx="${idx}">Close</button>
+                                        <button class="btn-back bg-red-200 text-black font-semibold rounded px-8 py-5 mt-4 mx-auto block " data-idx="${idx}">Close</button>
                                     </div>
                                 </div>
                             </div>
