@@ -15,7 +15,7 @@ class AppNav extends HTMLElement {
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <div id="sidebar" class="hidden flex-row sm:flex-col fixed sm:fixed left-0 top-0 w-50 sm:w-40 h-full sm:h-screen bg-black/80 z-50 shadow-lg transition-transform duration-300 -translate-x-full sm:translate-x-0">
+    <div id="sidebar" class="hidden flex-row sm:flex-col fixed sm:fixed left-0 top-0 w-50 sm:w-40 h-full sm:h-screen bg-black/80 z-50 shadow-lg">
       <div class="flex items-center justify-center sm:justify-center w-full h-16 sm:h-32 p-2 sm:pt-8">
         <img src="${logo}" alt="logo mortal kombat" class="h-10 sm:h-15 w-auto ">
       </div>
@@ -32,6 +32,36 @@ class AppNav extends HTMLElement {
     // Add styles for active state
     const style = document.createElement('style');
     style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      #sidebar {
+        transform: translateX(-100%);
+      }
+
+      #sidebar.sidebar-open {
+        animation: slideIn 0.3s ease-in-out forwards;
+      }
+
+      #sidebar.sidebar-close {
+        animation: slideOut 0.3s ease-in-out forwards;
+      }
+
       .btn-nav {
         position: relative;
         padding: 0.5rem 1rem;
@@ -61,25 +91,34 @@ class AppNav extends HTMLElement {
     `;
     this.appendChild(style);
 
-    // Sidebar toggle logic
     setTimeout(() => {
       const sidebar = this.querySelector('#sidebar');
       const overlay = this.querySelector('#sidebarOverlay');
       const toggle = this.querySelector('#sidebarToggle');
       if (toggle && sidebar && overlay) {
         toggle.addEventListener('click', () => {
-          sidebar.classList.remove('hidden');
-          sidebar.classList.remove('-translate-x-full');
-          overlay.classList.remove('hidden');
+          if (sidebar.classList.contains('hidden')) {
+            sidebar.classList.remove('hidden');
+            sidebar.classList.remove('sidebar-close');
+            sidebar.classList.add('sidebar-open');
+            overlay.classList.remove('hidden');
+          } else {
+            sidebar.classList.remove('sidebar-open');
+            sidebar.classList.add('sidebar-close');
+            overlay.classList.add('hidden');
+            setTimeout(() => sidebar.classList.add('hidden'), 300);
+          }
         });
         overlay.addEventListener('click', () => {
-          sidebar.classList.add('-translate-x-full');
+          sidebar.classList.remove('sidebar-open');
+          sidebar.classList.add('sidebar-close');
           overlay.classList.add('hidden');
           setTimeout(() => sidebar.classList.add('hidden'), 300);
         });
         sidebar.querySelectorAll('button').forEach(btn => {
           btn.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('sidebar-open');
+            sidebar.classList.add('sidebar-close');
             overlay.classList.add('hidden');
             setTimeout(() => sidebar.classList.add('hidden'), 300);
           });
@@ -95,7 +134,6 @@ class AppNav extends HTMLElement {
         const section = button.getAttribute('data-section');
         this.activeSection = section;
         
-        // Update active state of all buttons
         buttons.forEach(btn => {
           btn.classList.remove('active');
           if (btn.getAttribute('data-section') === section) {

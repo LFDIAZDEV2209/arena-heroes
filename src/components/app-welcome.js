@@ -33,7 +33,7 @@ class AppWelcome extends HTMLElement {
           </video>
           </div>
           <div class="contenido2">
-            <p class="text-xl sm:text-2xl font-bold ">MORTAL KOMBAT</p>
+            <p class="text-white text-xl sm:text-2xl font-bold ">MORTAL KOMBAT</p>
             <div class="mx-auto mt-2 w-20 sm:w-32 h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-700 rounded-full shadow-[0_0_10px_4px_rgba(255,165,0,0.5)]"></div>
           </div>
           <div class="btninit">
