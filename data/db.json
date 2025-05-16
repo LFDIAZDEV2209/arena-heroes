@@ -1,0 +1,210 @@
+{
+  "api": {
+    "characters": [
+      {
+        "name": "Sub-Zero",
+        "alias": "Kuai Liang",
+        "description": "Guerrero del clan Lin Kuei con la habilidad de controlar el hielo en diversas formas.",
+        "hp": 100,
+        "suits": ["Clásico", "Lin Kuei", "Gran Maestro"],
+        "abilities": {
+          "strength": "Hielo",
+          "attack": 45,
+          "damage": 15,
+          "weakness": "Fuego"
+        },
+        "type": "base",
+        "image": "/public/img/sub zero.webp",
+        "imageSMALL": "/public/img/sub zeroSMALL.webp",
+        "id": "1"
+      },
+      {
+        "name": "Scorpion",
+        "alias": "Hanzo Hasashi",
+        "description": "Espectro vengativo del Netherrealm que manipula el fuego infernal.",
+        "hp": 100,
+        "suits": ["Shirai Ryu", "Espectro", "Vengador"],
+        "abilities": {
+          "strength": "Fuego infernal",
+          "attack": 40,
+          "damage": 20,
+          "weakness": "Magia sagrada"
+        },
+        "type": "base",
+        "image": "/public/img/scorpion.webp",
+        "imageSMALL": "/public/img/scorpionSMALL.webp",
+        "id": "2"
+      },
+      {
+        "name": "Cyrax",
+        "alias": "Cibernético",
+        "description": "Ninja cibernético del clan Lin Kuei equipado con un arsenal de armas y habilidades tecnológicas.",
+        "hp": 100,
+        "suits": ["Combate", "Infiltración", "Elite"],
+        "abilities": {
+          "strength": "Tecnología y trampas explosivas",
+          "attack": 55,
+          "damage": 5,
+          "weakness": "Hackeos o interferencia electrónica"
+        },
+        "type": "dlc",
+        "image": "/public/img/cyrax.webp",
+        "imageSMALL": "/public/img/cyraxSMALL.webp",
+        "id": "3"
+      },
+      {
+        "name": "Kung Lao",
+        "alias": "Maestro del Sombrero",
+        "description": "Monje Shaolin y amigo cercano de Liu Kang, conocido por su sombrero afilado como arma.",
+        "hp": 100,
+        "suits": ["Shaolin", "Monje", "Guerrero"],
+        "abilities": {
+          "strength": "Velocidad y precisión con su sombrero",
+          "attack": 42,
+          "damage": 18,
+          "weakness": "Fuerza bruta"
+        },
+        "type": "base", 
+        "image": "/public/img/kung lao.webp",
+        "imageSMALL": "/public/img/kung laoSMALL.webp",
+        "id": "4"
+      },
+      {
+        "name": "Ghost Face",
+        "alias": "El Asesino",
+        "description": "Personaje de horror clásico conocido por su máscara blanca y cuchillo afilado. Invitado especial en algunos títulos.",
+        "hp": 100,
+        "suits": ["Clásico", "Cazador", "Pesadilla"],
+        "abilities": {
+          "strength": "Sigilo y manipulación psicológica",
+          "attack": 38,
+          "damage": 22,
+          "weakness": "Combate directo"
+        },
+        "type": "dlc",
+        "image": "/public/img/ghost face.webp",
+        "imageSMALL": "/public/img/ghost faceSMALL.webp",
+        "id": "5"
+      },
+      {
+        "name": "Noob Saibot",
+        "alias": "Bi-Han",
+        "description": "Versión resucitada y oscura del primer Sub-Zero, convertido en un espectro sombrío.",
+        "hp": 100,
+        "suits": ["Sombra", "Espectro", "Oscuridad"],
+        "abilities": {
+          "strength": "Sombras y duplicación",
+          "attack": 44,
+          "damage": 16,
+          "weakness": "Luz o energía pura"
+        },
+        "type": "dlc",
+        "image": "/public/img/noob saibot.webp",
+        "imageSMALL": "/public/img/noob saibotSMALL.webp",
+        "id": "6"
+      },
+      {
+        "name": "Quan Chi",
+        "alias": "El Hechicero",
+        "description": "Hechicero del Netherrealm que controla magia oscura y necromancia.",
+        "hp": 100,
+        "suits": ["Nigromante", "Hechicero", "Oscuridad"],
+        "abilities": {
+          "strength": "Nigromancia y manipulación",
+          "attack": 49,
+          "damage": 11,
+          "weakness": "Traición o magia divina"
+        },
+        "type": "dlc",
+        "image": "/public/img/quan chi.webp",
+        "imageSMALL": "/public/img/quan chiSMALL.webp",
+        "id": "7"
+      },
+      {
+        "name": "Reptile",
+        "alias": "Syzoth",
+        "description": "Guerrero sauriano con habilidades de invisibilidad, ácido y velocidad mejorada.",
+        "hp": 100,
+        "suits": ["Saurio", "Camuflaje", "Depredador"],
+        "abilities": {
+          "strength": "Invisibilidad y ácido",
+          "attack": 46,
+          "damage": 14,
+          "weakness": "Frío extremo"
+        },
+        "type": "base",
+        "image": "/public/img/reptile.webp",
+        "imageSMALL": "/public/img/reptileSMALL.webp",
+        "id": "8"
+      },
+      {
+        "name": "Kenshi Takahashi",
+        "alias": "El Espadachín Ciego",
+        "description": "Espadachín ciego con habilidades telequinéticas y una espada encantada llamada Sento.",
+        "hp": 100,
+        "suits": ["Samurái", "Guerrero", "Maestro"],
+        "abilities": {
+          "strength": "Telequinesis y espada espiritual",
+          "attack": 37,
+          "damage": 23,
+          "weakness": "Ataques a distancia"
+        },
+        "type": "base",
+        "image": "/public/img/kenshi takahashi.webp",
+        "imageSMALL": "/public/img/kenshi takahashiSMALL.webp",
+        "id": "9"
+      },
+      {
+        "name": "Nitara",
+        "alias": "La Vampira",
+        "description": "Vampira del reino Vaeternus, ágil y peligrosa en combate aéreo.",
+        "hp": 100,
+        "suits": ["Vampira", "Cazadora", "Noble"],
+        "abilities": {
+          "strength": "Vuelo y absorción de sangre",
+          "attack": 52,
+          "damage": 8,
+          "weakness": "Luz solar o fuego"
+        },
+        "type": "base",
+        "image": "/public/img/nitara.webp",
+        "imageSMALL": "/public/img/nitaraSMALL.webp",
+        "id": "10"
+      },
+      {
+        "name": "Ermac",
+        "alias": "El Alma Colectiva",
+        "description": "Entidad mística compuesta por las almas de guerreros caídos, manipulador de la telequinesis y magia oscura.",
+        "hp": 100,
+        "suits": ["Almas", "Místico", "Guerrero"],
+        "abilities": {
+          "strength": "Telequinesis y control de almas",
+          "attack": 51,
+          "damage": 9,
+          "weakness": "Conflictos internos entre las almas que lo componen"
+        },
+        "type": "dlc",
+        "image": "/public/img/ermac.webp",
+        "imageSMALL": "/public/img/ermacSMALL.webp",
+        "id": "14"
+      },
+      {
+        "name": "Takeda",
+        "alias": "Heredero del Dragón",
+        "description": "Hijo de Kenshi y miembro del clan Shirai Ryu, experto en el uso de látigos de energía y técnicas telepáticas.",
+        "hp": 100,
+        "suits": ["Shirai Ryu", "Aprendiz", "Maestro"],
+        "abilities": {
+          "strength": "Látigos energéticos y percepción mental avanzada",
+          "attack": 50,
+          "damage": 10,
+          "weakness": "Impulsividad y falta de experiencia"
+        },
+        "type": "dlc",
+        "image": "/public/img/takeda.webp",
+        "imageSMALL": "/public/img/takedaSMALL.webp",
+        "id": "15"
+      }
+    ]
+  }
+}

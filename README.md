@@ -7,15 +7,18 @@
 
 ## 📋 Descripción del Proyecto
 
-Arena Heroes es una aplicación web moderna construida con Vite, JavaScript y TailwindCSS. El proyecto implementa una arquitectura modular y componentes reutilizables para crear una experiencia de usuario fluida y atractiva.
+Arena Heroes es una aplicación web moderna construida con Vite, JavaScript y TailwindCSS. El proyecto implementa una arquitectura modular y componentes reutilizables para crear una experiencia de usuario fluida, atractiva y responsiva, inspirada en los clásicos juegos de combate.
 
 ## 🚀 Características
 
 - ⚡ Desarrollo rápido con Vite
-- 🎨 Estilos modernos con TailwindCSS
-- 📱 Diseño responsive
-- 🧩 Arquitectura basada en componentes
+- 🎨 Estilos modernos y responsivos con TailwindCSS
+- 📱 Diseño responsive mejorado (soporte para móvil vertical y apaisado)
+- 🧩 Arquitectura basada en componentes personalizados (Web Components)
+- 🔊 Manejo de audio para soundtrack y efectos
+- 🕹️ Modos de juego: Player vs Player, Player vs CPU, CPU vs CPU
 - 🔥 Hot Module Replacement (HMR)
+- 🐞 Corrección de bugs en selección y combate
 
 ## 🛠️ Tecnologías
 
@@ -24,6 +27,15 @@ Arena Heroes es una aplicación web moderna construida con Vite, JavaScript y Ta
 - TailwindCSS 4.x
 - HTML5
 - CSS3
+
+## 🆕 Mejoras Recientes
+
+- **Responsive avanzado:** Ajustes para evitar desbordes y mejorar la experiencia en móvil apaisado y pantallas grandes.
+- **Botones adaptativos:** Los botones de selección y confirmación ahora se adaptan a cualquier tamaño de pantalla.
+- **Corrección en Player vs CPU:** El jugador puede atacar manualmente y la CPU ataca automáticamente en su turno.
+- **Manejo robusto de audio:** El soundtrack y los efectos funcionan correctamente en todos los modos.
+- **Accesibilidad:** Mejoras en el uso de `alt` en imágenes y feedback visual.
+- **Estructura modular:** Componentes reutilizables y comunicación por eventos personalizados.
 
 ## 📦 Instalación
 
@@ -99,7 +111,16 @@ git merge hotfix/nombre-hotfix
 arena-heroes/
 ├── src/
 │   ├── components/
-│   │   └── app-main.js
+│   │   ├── app-main.js
+│   │   ├── app-arenas.js
+│   │   ├── app-selector.js
+│   │   ├── app-fight.js
+│   │   └── js/
+│   │       └── soundtrack.js
+│   ├── assets/
+│   │   ├── audios/
+│   │   ├── ...
+│   ├── services/
 │   └── main.js
 ├── public/
 ├── index.html
@@ -121,6 +142,8 @@ arena-heroes/
 - Usar PascalCase para componentes
 - Comentar el código cuando sea necesario
 - Mantener los componentes pequeños y reutilizables
+- Usar eventos personalizados para comunicación entre componentes
+- Seguir buenas prácticas de accesibilidad y responsive
 
 ## 🔐 Variables de Entorno
 
@@ -131,6 +154,17 @@ VITE_HOST=localhost
 VITE_PORT=3000
 VITE_API_URL=http://localhost:3000
 ```
+
+## 📱 Recomendaciones Responsive y Accesibilidad
+
+- Asegúrate de tener en tu `index.html`:
+  ```html
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  ```
+- Usa siempre clases como `w-full`, `max-w-full`, `min-w-0` y `overflow-x-hidden` en los contenedores principales.
+- Usa `max-w-full` y `h-auto` en imágenes.
+- Agrega descripciones `alt` a todas las imágenes.
+- Prueba el proyecto en móvil vertical y apaisado.
 
 ## 📄 Licencia
 
