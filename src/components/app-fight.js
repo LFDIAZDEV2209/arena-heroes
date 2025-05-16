@@ -318,7 +318,12 @@ export class AppFight extends HTMLElement {
                     <p>🎯 Precisión:${this.player1Data?.abilities.weakness || '0'}</p>
                   </div>
                   ${this.gameMode === 'pvp' || this.gameMode === 'pvc' ? `
-                    <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-2 text-[10px] sm:text-base" style="display: none;">Atacar</button>
+                    <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar
+                      <audio id="soundtrack">
+                        <source src="src/assets/audios/golpe.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio>
+                    </button>
                   ` : ''}
                 </div>
               </div>
@@ -347,8 +352,12 @@ export class AppFight extends HTMLElement {
                     <p>🎯 Precisión:${this.player2Data?.abilities.weakness || '0'}</p>
                   </div>
                   ${this.gameMode === 'pvp' ? `
-                    <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-2 text-[10px] sm:text-base" style="display: none;">Atacar</button>
-                    <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
+                    <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar
+                      <audio id="soundtrack">
+                        <source src="src/assets/audios/golpe.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio>
+                    </button>
                   ` : ''}
                 </div>
               </div>

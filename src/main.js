@@ -8,4 +8,5 @@ import "./components/app-cameos.js";
 import "./components/app-fight.js";
 import "./components/app-selector.js";
 import "./components/app-ganador.js";
-
+import "./components/js/soundtrack.js"
+// import "./components/app-prueba.js"
