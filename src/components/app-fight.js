@@ -1,7 +1,7 @@
 const player1 = '/img/cyraxSMALL.webp';
 const player2 = '/img/quan chiSMALL.webp';
 const vs = '/img/vsLOGO.png';
-const video = '/src/assets/video-main.mp4';
+const video = '/src/assets/videoAttack.mp4';
 
 export class AppFight extends HTMLElement {
   constructor() {
@@ -226,7 +226,7 @@ export class AppFight extends HTMLElement {
     if (videoFrame) {
       videoFrame.play();
     }
-    setTimeout(() => this.showModalWinner(winnerNumber), 2000); 
+    setTimeout(() => this.showModalWinner(winnerNumber), 5000); 
   }
 
   async render() {
