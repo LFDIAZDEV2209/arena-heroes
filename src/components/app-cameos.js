@@ -9,8 +9,9 @@ export class AppCameos extends HTMLElement {
   async render() {
     const characterCameos = await getCharactersByType("base");
     this.innerHTML = `
-        <div class="container  overflow-auto h-full justify-end sm:pl-30">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center p-10">
+        <div class="w-full h-full flex items-center justify-center">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center p-4">
                     ${characterCameos.map((character, idx) => {
                         return `
                         <div class="w-70 max-w-sm border-2 border-gray-300 shadow-xl -skew-x-12 [perspective:1000px] bg-gray-300 hover:scale-105 m-4">
@@ -45,6 +46,7 @@ export class AppCameos extends HTMLElement {
                     }).join('')}
                 </div>
             </div>
+        </div>
         `;
                 this.addFlipEvents();
             }

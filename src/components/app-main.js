@@ -33,7 +33,7 @@ export class AppMain extends HTMLElement {
                     <app-nav class="fixed top-0 left-0 w-full z-50 pr-20"></app-nav>
                     <div id="content-view" class="mx-auto w-full max-w-full sm:max-w-4xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl
                         px-2 sm:px-6 md:px-10 lg:px-16 xl:px-20
-                        py-4 sm:py-8 md:py-10
+                        py-1 sm:py-2 md:py-4
                         transition-opacity duration-500 opacity-100 min-h-[calc(100vh-4rem)] flex items-center justify-center">
                         ${this.getHomeContent()}
                     </div>
