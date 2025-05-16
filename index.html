@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="./public/logo.png">
   <script defer type="module" src="src/main.js"></script>
   <link rel="stylesheet" href="/globals.css">
   <title>Arena Heroes</title>
 </head>
-<body>
+
+<body class="in-h-screen bg-cover bg-center bg-no-repeat"
+style="background-image: url('src/assets/background.gif');">
   <app-main></app-main>
+  <audio id="soundtrack" loop>
+    <source src="src/assets/audios/backSound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 </body>
 </html>
