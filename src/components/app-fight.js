@@ -297,7 +297,7 @@ export class AppFight extends HTMLElement {
             }
           </style>
 
-          <div class="w-[90%] h-screen flex flex-col items-center justify-center">
+          <div class="w-auto h-screen flex flex-col items-center justify-center">
             <div class="flex flex-col sm:flex-row justify-center items-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-8">
               <!-- Player 1 -->
               <div id="player1-card" class="group relative w-full max-w-xs sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer mb-4 sm:mb-0">
@@ -336,7 +336,7 @@ export class AppFight extends HTMLElement {
                   <h3 class="w-full text-2xl text-yellow-500 mt-0">${player2Name}</h3>
                   <div class="w-[90%] mb-4">
                     <p class="text-white text-xl skew-y-[3deg]">Vida</p>
-                    <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="w-auto h-3 bg-gray-700 rounded-full overflow-hidden">
                       <div id="vida2" class="health-bar bg-green-400" style="width: ${this.health2}%;"></div>
                     </div>
                   </div>
