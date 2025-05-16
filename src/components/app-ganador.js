@@ -77,7 +77,10 @@ export class AppGanador extends HTMLElement {
             </div>
           </div>
         </div>
-      </div>
+      </div><audio id="soundtrack" loop>
+        <source src="src/assets/audios/ganador.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
     `;
   }
 }
