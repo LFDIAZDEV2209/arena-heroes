@@ -278,10 +278,7 @@ export class AppSelector extends HTMLElement {
                                 <span class="text-red-400">${selectedCharacter.abilities.weakness}</span>
                             </p>
                         ` : `
-                            <p>⚔ </p>
-                            <p>🛡 </p>
-                            <p>💨 </p>
-                            <p>🎯 </p>
+
                         `}
                         <div class="flex flex-col gap-2 sm:gap-3 mt-3 sm:mt-6 w-full px-1 sm:px-2">
                             ${showRandomButton ? 
