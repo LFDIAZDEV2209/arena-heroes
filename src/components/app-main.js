@@ -9,7 +9,7 @@ export class AppMain extends HTMLElement {
 
     getHomeContent() {
         return `
-            <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-start pb-10 sm:pb-20 gap-3 text-center">
+            <section class="sect1 min-h-[calc(100vh-8rem)] w-full flex flex-col items-center justify-center pb-1 sm:pb-10 gap-3 text-center">
                 <div class="logo1 transform hover:scale-105 transition-transform duration-300 w-full flex justify-center">
                     <img id="mainLogo" src="${logo}" alt="logo mortal kombat" class="w-30 sm:w-50 md:w-60 lg:w-[350px] h-auto drop-shadow-2xl transition-transform duration-700 mx-auto">
                 </div>
@@ -25,16 +25,16 @@ export class AppMain extends HTMLElement {
 
     render() {
         this.innerHTML = `
-            <div class="relative w-full min-h-screen ">
+            <div class="relative w-full min-h-screen">
                 <div id="welcome-view" class="transition-opacity duration-500 opacity-100 flex items-center justify-center">
                     <app-welcome></app-welcome>
                 </div>
                 <div id="main-view" class="hidden transition-opacity duration-500 opacity-0">
                     <app-nav class="fixed top-0 left-0 w-full z-50 pr-20"></app-nav>
-                    <div id="content-view" mx-auto w-full max-w-full sm:max-w-4xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl
-           px-2 sm:px-6 md:px-10 lg:px-16 xl:px-20
-           py-4 sm:py-8 md:py-10
-           transition-opacity duration-500 opacity-100 min-h-[60vh]">
+                    <div id="content-view" class="mx-auto w-full max-w-full sm:max-w-4xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl
+                        px-2 sm:px-6 md:px-10 lg:px-16 xl:px-20
+                        py-4 sm:py-8 md:py-10
+                        transition-opacity duration-500 opacity-100 min-h-[calc(100vh-4rem)] flex items-center justify-center">
                         ${this.getHomeContent()}
                     </div>
                 </div>
