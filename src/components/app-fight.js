@@ -71,13 +71,10 @@ export class AppFight extends HTMLElement {
     if (attackButton2) attackButton2.style.display = 'none';
 
     if (this.currentTurn === 1) {
-      if (this.gameMode === 'pvp') {
+      if (this.gameMode === 'pvp' || this.gameMode === 'pvc') {
         if (attackButton1) {
           attackButton1.style.display = 'block';
         }
-      } else if (this.gameMode === 'pvc') {
-        // En modo PvC, CPU 1 ataca automáticamente
-        setTimeout(() => this.performAttack(1), 1000);
       }
     } else {
       if (this.gameMode === 'pvp') {
