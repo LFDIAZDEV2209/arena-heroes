@@ -287,11 +287,11 @@ export class AppSelector extends HTMLElement {
         const showRandomButton = this.gameMode === 'cvc' || (this.gameMode === 'pvc' && playerNumber === 1) || (this.gameMode === 'pvp' && !this.confirmedSelections[`player${playerNumber}`]);
         
         return `
-            <div id="userCard${playerNumber}" class="group relative w-[120px] h-[250px] sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex flex-col justify-start">
+            <div id="userCard${playerNumber}" class="group relative w-full max-w-[140px] sm:w-[300px] sm:h-[400px] min-w-0 border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer flex flex-col justify-start break-words">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${selectedCharacter ? selectedCharacter.image : (isCPU ? user2 : user1)}');"></div>
-                <div class="relative z-10 p-2 sm:p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
-                    <h3 class="w-full text-xs sm:text-2xl text-yellow-500 mt-0 text-center">${selectedCharacter ? selectedCharacter.name : playerType}</h3>
-                    <div class="flex flex-col gap-1 sm:gap-2 text-[10px] sm:text-sm text-white mt-2 sm:mt-4 w-full">
+                <div class="relative z-10 p-2 sm:p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg min-w-0">
+                    <h3 class="w-full text-xs sm:text-2xl text-yellow-500 mt-0 text-center break-words">${selectedCharacter ? selectedCharacter.name : playerType}</h3>
+                    <div class="flex flex-col gap-1 sm:gap-2 text-[10px] sm:text-sm text-white mt-2 sm:mt-4 w-full min-w-0">
                         ${selectedCharacter ? `
                             <p class="flex items-center gap-1 sm:gap-2">
                                 <span class="text-amber-400">⚔</span> 
@@ -312,13 +312,13 @@ export class AppSelector extends HTMLElement {
                         ` : `
 
                         `}
-                        <div class="flex flex-col gap-2 sm:gap-3 mt-3 sm:mt-6 w-full px-1 sm:px-2">
+                        <div class="flex flex-col gap-2 sm:gap-3 mt-3 sm:mt-6 w-full px-1 sm:px-2 min-w-0">
                             ${showRandomButton ? 
-                                `<button class="random-selection bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-[10px] sm:text-base transition-colors duration-300 w-full" data-player="${playerNumber}">
+                                `<button class="random-selection bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-[10px] sm:text-base transition-colors duration-300 w-full min-w-0 break-words" data-player="${playerNumber}">
                                     Aleatorio
                                 </button>` : ''}
                             ${(this.gameMode === 'pvp' || this.gameMode === 'pvc') && isSelecting ? 
-                                `<button class="confirm-selection bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-[10px] sm:text-base transition-colors duration-300 w-full" data-player="${playerNumber}">
+                                `<button class="confirm-selection bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded text-[10px] sm:text-base transition-colors duration-300 w-full min-w-0 break-words" data-player="${playerNumber}">
                                     Confirmar
                                 </button>` : ''}
                         </div>
@@ -332,16 +332,16 @@ export class AppSelector extends HTMLElement {
         // Asegúrate de tener <meta name="viewport" content="width=device-width, initial-scale=1"> en tu index.html
         const characterSelector = await getCharacters(); 
         this.innerHTML = `
-            <div class="w-auto h-screen flex flex-col items-center justify-center">
-                <div class="flex flex-col sm:flex-row items-center justify-center w-full sm:w-4/5 mx-auto m-2 sm:m-4 gap-2 sm:gap-5 pr-2 sm:pr-3">
+            <div class="w-full max-w-full min-h-screen overflow-x-hidden box-border flex flex-col items-center justify-center">
+                <div class="flex flex-col sm:flex-row items-center justify-center w-full sm:w-4/5 mx-auto m-2 sm:m-4 gap-2 sm:gap-5 pr-2 sm:pr-3 min-w-0">
                     ${this.getPlayerCard(1, this.gameMode === 'cvc')}
                     <!-- VS -->
-                    <div class="flex items-center justify-center">
-                        <div id="selector">
-                            <div class="grid grid-cols-4 sm:grid-cols-6 gap-0.5 sm:gap-2 justify-items-center mt-2 sm:mt-10">
+                    <div class="flex items-center justify-center min-w-0">
+                        <div id="selector" class="min-w-0">
+                            <div class="grid grid-cols-4 sm:grid-cols-6 gap-0.5 sm:gap-2 justify-items-center mt-2 sm:mt-10 min-w-0">
                                 ${characterSelector.map(character => {
                                     return `        
-                                        <div class="character-selected bg-gray-700 opacity-85 border-1 border-amber-400 border-solid shadow-md rounded-lg hover:scale-110 transition-transform duration-300 cursor-pointer" 
+                                        <div class="character-selected bg-gray-700 opacity-85 border-1 border-amber-400 border-solid shadow-md rounded-lg hover:scale-110 transition-transform duration-300 cursor-pointer min-w-0" 
                                              data-id="${character.id}"
                                              data-name="${character.name}"
                                              data-image="${character.image}"
@@ -349,7 +349,7 @@ export class AppSelector extends HTMLElement {
                                              data-attack="${character.abilities.attack}"
                                              data-damage="${character.abilities.damage}"
                                              data-weakness="${character.abilities.weakness}">
-                                            <img src="${character.imageSMALL}" alt="${character.name}" class="w-8 h-8 sm:w-20 sm:h-20" />
+                                            <img src="${character.imageSMALL}" alt="${character.name}" class="w-8 h-8 sm:w-20 sm:h-20 max-w-full h-auto block" />
                                         </div>
                                     `;
                                 }).join('')}
