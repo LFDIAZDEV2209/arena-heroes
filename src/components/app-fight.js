@@ -18,9 +18,11 @@ export class AppFight extends HTMLElement {
   }
 
   handleFightEvent(event) {
+    console.log('Fight component received event:', event.detail);
     this.player1Data = event.detail.player1;
     this.player2Data = event.detail.player2;
     this.gameMode = event.detail.gameMode;
+    console.log('Fight component game mode:', this.gameMode);
     this.health1 = 100;
     this.health2 = 100;
     this.render();
@@ -49,9 +51,16 @@ export class AppFight extends HTMLElement {
   }
 
   startFight() {
+    console.log('Starting fight in mode:', this.gameMode);
     this.isFighting = true;
     this.currentTurn = 1;
-    this.updateTurn();
+    
+    if (this.gameMode === 'cvc') {
+      console.log('Starting automatic CPU vs CPU fight');
+      this.performAttack(1);
+    } else {
+      this.updateTurn();
+    }
   }
 
   updateTurn() {
@@ -62,12 +71,12 @@ export class AppFight extends HTMLElement {
     if (attackButton2) attackButton2.style.display = 'none';
 
     if (this.currentTurn === 1) {
-      if (this.gameMode === 'pvp' || this.gameMode === 'pvc') {
+      if (this.gameMode === 'pvp') {
         if (attackButton1) {
           attackButton1.style.display = 'block';
         }
-      } else if (this.gameMode === 'cvc') {
-        // En modo CvC, CPU 1 ataca automáticamente
+      } else if (this.gameMode === 'pvc') {
+        // En modo PvC, CPU 1 ataca automáticamente
         setTimeout(() => this.performAttack(1), 1000);
       }
     } else {
@@ -75,8 +84,8 @@ export class AppFight extends HTMLElement {
         if (attackButton2) {
           attackButton2.style.display = 'block';
         }
-      } else if (this.gameMode === 'pvc' || this.gameMode === 'cvc') {
-        // En modo PvC o CvC, CPU 2 ataca automáticamente
+      } else if (this.gameMode === 'pvc') {
+        // En modo PvC, CPU 2 ataca automáticamente
         setTimeout(() => this.performAttack(2), 1000);
       }
     }
@@ -148,11 +157,17 @@ export class AppFight extends HTMLElement {
 
     // Cambiar el turno
     this.currentTurn = defenderNumber;
-    this.updateTurn();
 
     // Verificar si el juego ha terminado
     if (this.health1 <= 0 || this.health2 <= 0) {
       this.endFight(attackerNumber);
+    } else {
+      // Si es modo CPU vs CPU, continuar con el siguiente ataque automáticamente
+      if (this.gameMode === 'cvc') {
+        setTimeout(() => this.performAttack(defenderNumber), 1000);
+      } else {
+        this.updateTurn();
+      }
     }
   }
 
@@ -317,7 +332,7 @@ export class AppFight extends HTMLElement {
                     <p>💨 Velocidad:${this.player1Data?.abilities.damage || '0'}</p>
                     <p>🎯 Precisión:${this.player1Data?.abilities.weakness || '0'}</p>
                   </div>
-                  ${this.gameMode === 'pvp' || this.gameMode === 'pvc' ? `
+                  ${(this.gameMode === 'pvp' || this.gameMode === 'pvc') && this.gameMode !== 'cvc' ? `
                     <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar
                       <audio id="soundtrack">
                         <source src="src/assets/audios/golpe.mp3" type="audio/mpeg">
@@ -351,7 +366,7 @@ export class AppFight extends HTMLElement {
                     <p>💨 Velocidad:${this.player2Data?.abilities.damage || '0'}</p>
                     <p>🎯 Precisión:${this.player2Data?.abilities.weakness || '0'}</p>
                   </div>
-                  ${this.gameMode === 'pvp' ? `
+                  ${this.gameMode === 'pvp' && this.gameMode !== 'cvc' ? `
                     <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar
                       <audio id="soundtrack">
                         <source src="src/assets/audios/golpe.mp3" type="audio/mpeg">

@@ -15,22 +15,19 @@ export class AppArenas extends HTMLElement{
             const cvcSection = e.target.closest('.border-blue-600');
 
             if (pvpSection) {
-                this.dispatchEvent(new CustomEvent('gameModeSelected', {
-                    detail: { mode: 'pvp' },
-                    bubbles: true,
-                    composed: true
+                console.log('PVP mode selected');
+                document.dispatchEvent(new CustomEvent('gameModeSelected', {
+                    detail: { mode: 'pvp' }
                 }));
             } else if (pvcSection) {
-                this.dispatchEvent(new CustomEvent('gameModeSelected', {
-                    detail: { mode: 'pvc' },
-                    bubbles: true,
-                    composed: true
+                console.log('PVC mode selected');
+                document.dispatchEvent(new CustomEvent('gameModeSelected', {
+                    detail: { mode: 'pvc' }
                 }));
             } else if (cvcSection) {
-                this.dispatchEvent(new CustomEvent('gameModeSelected', {
-                    detail: { mode: 'cvc' },
-                    bubbles: true,
-                    composed: true
+                console.log('CVC mode selected');
+                document.dispatchEvent(new CustomEvent('gameModeSelected', {
+                    detail: { mode: 'cvc' }
                 }));
             }
         });
@@ -56,7 +53,7 @@ export class AppArenas extends HTMLElement{
             </div>
 
             <!-- Player vs CPU -->
-            <div class="border-4 border-yellow-600 rounded-xl bg-opacity-10 p-6 cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105">
+            <div class="border-4 border-red-600 rounded-xl bg-opacity-10 p-6 cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105">
               <h3 class="text-center text-lg sm:text-xl font-bold mb-4 text-white">Player vs CPU</h3>
               <div class="players-grid flex flex-col gap-6 justify-center items-center">
                 <div class="player-card bg-gray-200 border-2 border-gray-300 shadow-lg transform -skew-y-3 p-8 opacity-60 max-w-xs text-center">
@@ -72,7 +69,7 @@ export class AppArenas extends HTMLElement{
             </div>
 
             <!-- CPU vs CPU -->
-            <div class="border-4 border-yellow-600 rounded-xl bg-opacity-10 p-6 cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105">
+            <div class="border-4 border-blue-600 rounded-xl bg-opacity-10 p-6 cursor-pointer flex flex-col transition-transform duration-300 hover:scale-105">
               <h3 class="text-center text-lg sm:text-xl font-bold mb-4 text-white">CPU vs CPU</h3>
               <div class="players-grid flex flex-col gap-6 justify-center items-center">
                 <div class="player-card bg-gray-200 border-2 border-gray-300 shadow-lg transform -skew-y-3 p-8 opacity-60 max-w-xs text-center">

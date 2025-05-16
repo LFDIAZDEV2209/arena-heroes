@@ -25,6 +25,7 @@ export class AppSelector extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'game-mode') {
+            console.log('Selector received game mode:', newValue);
             this.gameMode = newValue;
             this.selectedCharacters = {
                 player1: null,
@@ -39,6 +40,7 @@ export class AppSelector extends HTMLElement {
             
             // Si es modo CPU vs CPU, seleccionar personajes automáticamente
             if (this.gameMode === 'cvc') {
+                console.log('Starting CPU vs CPU mode');
                 this.handleCPUvsCPU();
             }
         }
@@ -147,6 +149,7 @@ export class AppSelector extends HTMLElement {
     }
 
     redirectToFight() {
+        console.log('Redirecting to fight with game mode:', this.gameMode);
         // Crear un evento personalizado con los datos de los personajes seleccionados
         const fightEvent = new CustomEvent('startFight', {
             detail: {
@@ -198,15 +201,44 @@ export class AppSelector extends HTMLElement {
     }
 
     async handleCPUvsCPU() {
+        const characterSelector = await getCharacters();
+        
         // Seleccionar personaje para CPU 1
-        await this.selectRandomCharacter(1);
+        const randomIndex1 = Math.floor(Math.random() * characterSelector.length);
+        const cpu1Character = characterSelector[randomIndex1];
+        
+        this.selectedCharacters.player1 = {
+            id: cpu1Character.id,
+            name: cpu1Character.name,
+            image: cpu1Character.image,
+            abilities: {
+                strength: cpu1Character.abilities.strength,
+                attack: cpu1Character.abilities.attack,
+                damage: cpu1Character.abilities.damage,
+                weakness: cpu1Character.abilities.weakness
+            }
+        };
         this.confirmedSelections.player1 = true;
         
-        // Seleccionar personaje para CPU 2
-        await this.selectRandomCharacter(2);
+        // Seleccionar personaje para CPU 2 (diferente al de CPU 1)
+        const availableCharacters = characterSelector.filter(char => char.id !== cpu1Character.id);
+        const randomIndex2 = Math.floor(Math.random() * availableCharacters.length);
+        const cpu2Character = availableCharacters[randomIndex2];
+        
+        this.selectedCharacters.player2 = {
+            id: cpu2Character.id,
+            name: cpu2Character.name,
+            image: cpu2Character.image,
+            abilities: {
+                strength: cpu2Character.abilities.strength,
+                attack: cpu2Character.abilities.attack,
+                damage: cpu2Character.abilities.damage,
+                weakness: cpu2Character.abilities.weakness
+            }
+        };
         this.confirmedSelections.player2 = true;
         
-        // Redirigir a la vista de lucha
+        // Redirigir inmediatamente a la vista de lucha
         this.redirectToFight();
     }
 

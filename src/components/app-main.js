@@ -78,6 +78,7 @@ export class AppMain extends HTMLElement {
         document.addEventListener('gameModeSelected', (e) => {
             const contentView = this.querySelector('#content-view');
             const gameMode = e.detail.mode;
+            console.log('Game Mode Selected:', gameMode);
             this.fadeOut(contentView, () => {
                 contentView.innerHTML = `<app-selector game-mode="${gameMode}"></app-selector>`;
                 this.fadeIn(contentView);
@@ -89,12 +90,14 @@ export class AppMain extends HTMLElement {
             const contentView = this.querySelector('#content-view');
             const view = e.detail.view;
             const data = e.detail.data;
+            console.log('View Change:', view, 'Game Mode:', data?.gameMode);
 
             this.fadeOut(contentView, () => {
                 if (view === 'fight') {
                     contentView.innerHTML = '<app-fight></app-fight>';
                     // Esperar a que el componente se monte antes de enviar los datos
                     setTimeout(() => {
+                        console.log('Dispatching startFight event with data:', data);
                         document.dispatchEvent(new CustomEvent('startFight', {
                             detail: data
                         }));
