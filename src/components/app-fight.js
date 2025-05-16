@@ -298,55 +298,56 @@ export class AppFight extends HTMLElement {
           </style>
 
           <div class="w-auto h-screen flex flex-col items-center justify-center">
-            <div class="flex flex-col sm:flex-row justify-center items-center w-full sm:w-4/5 mx-auto m-4 gap-2 sm:gap-8">
+            <div class="flex flex-row justify-center items-center w-full sm:w-4/5 mx-auto m-2 sm:m-4 gap-2 sm:gap-8">
               <!-- Player 1 -->
-              <div id="player1-card" class="group relative w-full max-w-xs sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer mb-4 sm:mb-0">
+              <div id="player1-card" class="group relative w-[130px] h-[320px] sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer mb-0">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player1Image}');"></div>
                 <div id="damage-overlay-1" class="absolute top-0 left-0 w-full h-full bg-red-500/30 opacity-0 transition-opacity duration-300 pointer-events-none z-5"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
                   <h3 class="w-full text-2xl text-yellow-500 mt-0">${player1Name}</h3>
-                  <div class="w-[90%] mb-4">
-                    <p class="text-white text-xl skew-y-[3deg]">Vida</p>
+                  <div class="w-[90%] mb-2">
+                    <p class="text-white text-sm sm:text-xl skew-y-[3deg]">Vida</p>
                     <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
                       <div id="vida1" class="health-bar bg-green-400" style="width: ${this.health1}%;"></div>
                     </div>
                   </div>
-                  <div class="hidden group-hover:flex flex-col gap-1 text-sm text-white mt-2">
+                  <div class="flex flex-col gap-0.5 text-[8px] sm:text-sm text-white mt-1">
                     <p>⚔️ Fuerza:   ${this.player1Data?.abilities.attack || '0'}</p>
                     <p>🛡️ Defensa:  ${this.player1Data?.abilities.strength || '0'}</p>
                     <p>💨 Velocidad:${this.player1Data?.abilities.damage || '0'}</p>
                     <p>🎯 Precisión:${this.player1Data?.abilities.weakness || '0'}</p>
-                </div>
+                  </div>
                   ${this.gameMode === 'pvp' || this.gameMode === 'pvc' ? `
-                    <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
+                    <button id="attackButton1" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-2 text-[10px] sm:text-base" style="display: none;">Atacar</button>
                   ` : ''}
                 </div>
               </div>
 
               <!-- VS -->
-              <div class="flex items-center justify-center w-full sm:w-[200px] my-4 sm:my-0">
-                <img src="${vs}" alt="versus" class="w-24 h-24 sm:w-full sm:h-auto" />
+              <div class="flex items-center justify-center w-[80px] sm:w-[200px] my-0">
+                <img src="${vs}" alt="versus" class="w-16 h-16 sm:w-full sm:h-auto" />
               </div>
 
               <!-- Player 2 -->
-              <div id="player2-card" class="group relative w-full max-w-xs sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+              <div id="player2-card" class="group relative w-[130px] h-[320px] sm:w-[300px] sm:h-[400px] border-2 border-gray-300 rounded-lg overflow-hidden skew-y-[-3deg] bg-gray-700 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
                 <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-70 z-0" style="background-image: url('${player2Image}');"></div>
                 <div id="damage-overlay-2" class="absolute top-0 left-0 w-full h-full bg-red-500/30 opacity-0 transition-opacity duration-300 pointer-events-none z-5"></div>
                 <div class="relative z-10 p-4 bg-black/10 h-full w-[90%] flex flex-col justify-between items-center rounded-lg">
                   <h3 class="w-full text-2xl text-yellow-500 mt-0">${player2Name}</h3>
-                  <div class="w-[90%] mb-4">
-                    <p class="text-white text-xl skew-y-[3deg]">Vida</p>
+                  <div class="w-[90%] mb-2">
+                    <p class="text-white text-sm sm:text-xl skew-y-[3deg]">Vida</p>
                     <div class="w-auto h-3 bg-gray-700 rounded-full overflow-hidden">
                       <div id="vida2" class="health-bar bg-green-400" style="width: ${this.health2}%;"></div>
                     </div>
                   </div>
-                  <div class="hidden group-hover:flex flex-col gap-1 text-sm text-white mt-2">
+                  <div class="flex flex-col gap-0.5 text-[8px] sm:text-sm text-white mt-1">
                     <p>⚔️ Fuerza:   ${this.player2Data?.abilities.attack || '0'}</p>
                     <p>🛡️ Defensa:  ${this.player2Data?.abilities.strength || '0'}</p>
                     <p>💨 Velocidad:${this.player2Data?.abilities.damage || '0'}</p>
                     <p>🎯 Precisión:${this.player2Data?.abilities.weakness || '0'}</p>
-                </div>
+                  </div>
                   ${this.gameMode === 'pvp' ? `
+                    <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-2 text-[10px] sm:text-base" style="display: none;">Atacar</button>
                     <button id="attackButton2" class="bg-gradient-to-r from-[#f4e179] via-[#c1972a] to-[#a26808] text-white px-4 py-2 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4" style="display: none;">Atacar</button>
                   ` : ''}
                 </div>
