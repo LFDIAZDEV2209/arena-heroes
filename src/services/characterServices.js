@@ -1,5 +1,5 @@
 // Configuración de la API URL
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'https://server-arena-game.onrender.com';
 
 // Headers para las peticiones
 const myHeader = new Headers({
